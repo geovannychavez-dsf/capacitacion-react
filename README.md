@@ -35,3 +35,41 @@ npm run dev
 ```
 5. Abre tu navegador y visita `http://localhost:5173` pureto por decefcto para ver la aplicación en acción.
 ## Contribuciones
+
+## TAREA 7
+Se requiere desarrollar una pantalla dentro del menú principal que consuma el servicio de personajes de la API pública de Rick and Morty.
+
+La información obtenida debe ser presentada en formato de tarjetas (cards), mostrando datos relevantes de cada personaje.
+
+Requerimientos funcionales
+Consumir el endpoint: https://rickandmortyapi.com/api/character
+Mostrar los personajes en formato de cards
+Cada card debe contener:
+Imagen del personaje
+Nombre
+Estado (Alive, Dead, Unknown)
+Mostrar múltiples personajes en forma de grid
+
+Requerimientos técnicos
+Usar React con Functional Components + Hooks
+Manejo de estado con:
+useState
+useEffect
+Separar lógica de negocio y presentación:
+services/character.service.ts → consumo API
+components/CharacterCard.tsx → card individual
+pages/Characters.tsx → pantalla principal
+hooks/useCharacter
+Manejo de estados:
+Loading (cargando)
+Error (si falla la API)
+
+
+Criterios de aceptación
+Se consumen correctamente los datos de la API
+Se muestran al menos 10 personajes en pantalla
+Cada personaje se muestra en una card con imagen, nombre y estado
+Existe indicador de carga mientras se obtiene la información
+Se maneja error si la API falla
+Código organizado y separado por responsabilidades
+Componentes reutilizables
