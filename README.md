@@ -19,7 +19,7 @@ inación.
 ## Cómo ejecutar el proyecto
 1. Clona el repositorio:
 ```bash
-git clone
+git clone git origin https://github.com/geovannychavez-dsf/capacitacion-react.git
 ```
 2. Navega al directorio del proyecto:
 ```bash
