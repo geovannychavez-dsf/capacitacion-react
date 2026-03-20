@@ -1,9 +1,9 @@
-import { ButtonCountCharter } from "../../Components/button-count-characters";
-import { InputCharacter } from "../../Components/input-charactes";
-import { ItemCharacter } from "../../Components/item-characters";
-import { ListCharacter } from "../../Components/list-characters";
-import { useFetchCharacters } from "../../Hooks/use-fetch-characters";
-import { useSearchCharacters } from "../../Hooks/use-search-characters";
+import { ButtonCountCharter } from "../Components/button-count-characters";
+import { InputCharacter } from "../Components/input-charactes";
+import { ItemCharacter } from "../Components/item-characters";
+import { ListCharacter } from "../Components/list-characters";
+import { useFetchCharacters } from "../Hooks/use-fetch-characters";
+import { useSearchCharacters } from "../Hooks/use-search-characters";
 
 export const CharacterListScreen = () => {
   const { characters, loading, setPage, page, error } = useFetchCharacters();
