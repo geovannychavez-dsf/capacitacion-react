@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { ICharacter } from "../interfaces/rick-and-morty-interface";
 
 export const useSearchCharacters = (characters: ICharacter[]) => {

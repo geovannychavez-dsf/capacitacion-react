@@ -35,7 +35,7 @@ export const useFetchCharacters = () => {
         }
     };
     /**
-     * useEfect se ejecuta cada que se monta el comonente 
+     * useEfect se ejecuta cada que se monta el componente 
      * o cada que se actualiza el estado de page 
      */
     useEffect(() => {
