@@ -1,11 +1,12 @@
-import {CharacterListScreen} from './pages/character-list-screen'
-
+import { CharacterListScreen } from "./pages/character-list-page";
+import { CssBaseline } from "@mui/material";
 import "./App.css";
 function App() {
   return (
     <>
       <section id="center">
-        <CharacterListScreen/>
+        <CssBaseline />
+        <CharacterListScreen />
       </section>
     </>
   );

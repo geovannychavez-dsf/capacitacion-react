@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { rickAndMortyService } from "../services/rick-morty-service";
+import { rickAndMortyService } from "../services/character-service";
 import { IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
+import { ApiError } from "../core/error/api-error";
 
 export const useFetchCharacters = () => {
     const [page, setPage] = useState<number>(1);
@@ -14,10 +15,11 @@ export const useFetchCharacters = () => {
         results: []
     });
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);    
+    const [error, setError] = useState<string | null>(null);
     /**
      * Consume el servicio para obtener los personajes de Rick and Morty, actualiza el estado de characters, loading y error según corresponda.
      * @param page entero que representa la página a consultar, por defecto es 1
+     * @returns promesa que resuelve void
      */
     const fetchCharacters = async ({ page = 1 }: { page: number }): Promise<void> => {
         setError(null);
@@ -26,10 +28,12 @@ export const useFetchCharacters = () => {
             const response = await rickAndMortyService.getCharacters(page);
             setCharacters(response);
             setLoading(false);
-        } catch (err) {
-            console.error("Error fetching characters:", err);
-            setError((err as Error).message);
-            setLoading(false);
+        } catch (erro) {
+            if (erro instanceof ApiError) {
+                setError(erro.message);
+            } else {
+                setError("Error inesperado");
+            }
         } finally {
             setLoading(false);
         }
@@ -43,5 +47,5 @@ export const useFetchCharacters = () => {
         fetchCharacters({ page });
     }, [page]);
 
-    return { characters, loading, error, setPage ,page};
+    return { characters, loading, error, setPage, page };
 }

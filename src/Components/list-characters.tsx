@@ -1,7 +1,8 @@
+import { Grid } from "@mui/material";
 export const ListCharacter = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="list-character">    
-        {children}
-    </div>
+    <Grid container spacing={2}>
+      {children}
+    </Grid>
   );
-}   
+};

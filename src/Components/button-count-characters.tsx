@@ -1,3 +1,5 @@
+import { Button } from "@mui/material";
+
 interface ButtonCharterProps {
   isLoading?: boolean;
   page: number;
@@ -5,25 +7,39 @@ interface ButtonCharterProps {
   decrementPage: () => void;
 }
 
-export const ButtonCountCharter = ({ isLoading, page, incrementPage, decrementPage }: ButtonCharterProps) => {
+export const ButtonCountCharter = ({
+  isLoading,
+  page,
+  incrementPage,
+  decrementPage,
+}: ButtonCharterProps) => {
   return (
-    <div  style={{
+    <div
+      style={{
         display: "flex",
-        gap: "10px",
-      }}>
-        <button
-          disabled={isLoading || page === 1}
-          className="counter"
-          onClick={decrementPage}
-        > Prev Page</button>
-        <p>{page}</p>
-        <button
-          disabled={isLoading}
-          className="counter"
-          onClick={incrementPage}
-        >
-          Next Page
-        </button>
-      </div>
+        gap: "15px",
+      }}
+    >
+      <Button
+        variant="contained"
+        size="small"
+        disabled={isLoading || page === 1}
+        className="counter"
+        onClick={decrementPage}
+      >
+        {" "}
+        Anter.
+      </Button>
+      <p>{page}</p>
+      <Button
+        variant="contained"
+        size="small"
+        disabled={isLoading||page === 42}
+        className="counter"
+        onClick={incrementPage}
+      >
+        Sig.
+      </Button>
+    </div>
   );
 };
