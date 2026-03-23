@@ -5,7 +5,7 @@ import {
 } from "../interfaces/rick-and-morty-interface";
 
 const API_BASE_URL = "https://rickandmortyapi.com/api";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 export class RickAndMortyService {
   /**
    * Obtiene la lista de personajes de Rick and Morty

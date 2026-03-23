@@ -18,7 +18,6 @@ export const CharacterListScreen = () => {
 
   return (
     <Container
-      className="character-list-screen"
       style={{
         display: "flex",
         flexDirection: "column",
