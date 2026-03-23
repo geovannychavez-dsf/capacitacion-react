@@ -24,8 +24,10 @@ export default defineConfig([
     },
     ecmaVersion: "latest",
     rules: {
+      "no-console": "error",
       "@typescript-eslint/no-unsafe-return": "error",
       "@typescript-eslint/no-unsafe-call": "error", // Asegúrate de que esta regla esté habilitada
+      "no-console": "warn",
       "@typescript-eslint/naming-convention": [
         "warn",
         // 1. PascalCase: Clases, interfaces, tipos (typeLike)
@@ -67,8 +69,7 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-floating-promises": "warn",
       "@typescript-eslint/no-unsafe-argument": "warn",
-      "no-console": ["warn", { allow: ["warn", "error"] }],
-
+      "no-console": "warn",
       "prettier/prettier": ["off", { endOfLine: "auto" }],
     },
   },

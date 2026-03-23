@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { rickAndMortyService } from "../services/character-service";
-import { IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
-import { ApiError } from "../../../core/error/api-error";
+import { ApiError } from "../../../core/api-error";
+import type { IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
+
 
 export const useFetchCharacters = () => {
     const [page, setPage] = useState<number>(1);
@@ -43,7 +44,6 @@ export const useFetchCharacters = () => {
      * o cada que se actualiza el estado de page 
      */
     useEffect(() => {
-        console.log("useFetchCharacters: useEffect ejecutado");
         fetchCharacters({ page });
     }, [page]);
 

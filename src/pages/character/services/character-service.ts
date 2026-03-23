@@ -1,12 +1,9 @@
 
-import {
-  IRickAndMortyResponse,
-  ICharacter,
-} from "../interfaces/rick-and-morty-interface";
+import { ApiError } from "../../../core/api-error";
 
 const API_BASE_URL = import.meta.env.VITE_API_CHARACTER;
 import axios from "axios";
-import { ApiError } from './../../../core/error/api-error';
+import type { ICharacter, IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
 export class RickAndMortyService {
   /**
    * Obtiene la lista de personajes de Rick and Morty
@@ -15,10 +12,8 @@ export class RickAndMortyService {
    */
   async getCharacters(page: number = 1): Promise<IRickAndMortyResponse> {
     try {
-      const { data } = await axios.get(
-        `${API_BASE_URL}/character?page=${page}`,
+      const { data } = await axios.get(`${API_BASE_URL}/character?page=${page}`,
       );
-
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

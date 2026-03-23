@@ -1,52 +1,73 @@
-# React + Vite
+# React + TypeScript + Vite
 
-## Descripción
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Este proyecto es una aplicación de React creada con Vite, que consume la API de Rick and Morty para mostrar una lista de personajes. La aplicación incluye paginación para navegar entre las diferentes páginas de personajes.
+Currently, two official plugins are available:
 
-## Estructura del proyecto
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-- `src/Components`: Contiene los componentes de la aplicación, como el botón de pag
-  inación.
-- `src/Hooks`: Contiene los hooks personalizados, como `useFetchCharacters`, que se encarga de la lógica de obtención de datos.
-  `useSearchCharacters` para la lógica de búsqueda de personajes.
-- `src/services`: Contiene los servicios para interactuar con la API de Rick and Morty, como `RickAndMortyService
-- `src/screens`: Contiene las pantallas de la aplicación, como `CharactersScreen`, que muestra la lista de personajes.
-- `src/App.tsx`: El componente principal de la aplicación que integra todos los componentes y hooks.
+## React Compiler
 
-## Tecnologías utilizadas
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-- React: Biblioteca de JavaScript para construir interfaces de usuario.
-- Vite: Herramienta de construcción rápida para proyectos de frontend.
-- TypeScript: Superset de JavaScript que añade tipado estático.
-- Fetch API: Para realizar solicitudes HTTP a la API de Rick and Morty.
+## Expanding the ESLint configuration
 
-## Cómo ejecutar el proyecto
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-1. Clona el repositorio:
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-```bash
-git clone git feacture <url-del-repositorio>
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-2. Navega al directorio del proyecto:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```bash
-cd capacitacion-react
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-3. Instala las dependencias:
-
-```bash
-npm install
-```
-
-4. Inicia la aplicación:
-
-```bash
-npm run dev
-```
-
-5. Abre tu navegador y visita `http://localhost:5173` pureto por decefcto para ver la aplicación en acción.
-
-## Contribuciones

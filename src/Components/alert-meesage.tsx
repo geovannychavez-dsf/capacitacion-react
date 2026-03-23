@@ -1,4 +1,4 @@
-import { Alert, AlertColor, Stack } from "@mui/material";
+import { Alert, Stack, type AlertColor } from "@mui/material";
 
 export default function AlertsMessage({
   severity,

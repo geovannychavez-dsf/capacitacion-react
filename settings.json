@@ -1,0 +1,9 @@
+id="config3"
+"files.watcherExclude": {
+  "**/node_modules/**": true,
+  "**/dist/**": true
+},
+"search.exclude": {
+  "**/node_modules": true,
+  "**/dist": true
+}

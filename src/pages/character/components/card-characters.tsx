@@ -1,8 +1,9 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
-import { ICharacter } from "../interfaces/rick-and-morty-interface";
-import * as motion from "motion/react-client";
 
-export const CharacterCard = ({ ...character }: ICharacter) => {
+import * as motion from "motion/react-client";
+import type { ICharacter } from "../interfaces/rick-and-morty-interface";
+
+export const CharacterCard = ({ character }: {character:ICharacter}) => {
   return (
     <motion.div
       initial={{ y: 10, opacity: 0 }}

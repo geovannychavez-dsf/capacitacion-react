@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-
+import { inputCharterStyle } from "../styles/textinput";
 interface ButtonCharterProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
@@ -10,11 +10,7 @@ export const InputCharacter = ({
 }: ButtonCharterProps) => {
   return (
     <TextField
-      style={{
-        padding: "10px",
-        width: "300px",
-        fontSize: "16px",
-      }}
+      style={inputCharterStyle}
       type="text"
       placeholder="Buscar nombre de personaje..."
       value={searchTerm}
