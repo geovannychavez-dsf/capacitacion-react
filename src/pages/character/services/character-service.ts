@@ -1,11 +1,12 @@
-import { ApiError } from "../core/error/api-error";
+
 import {
   IRickAndMortyResponse,
   ICharacter,
 } from "../interfaces/rick-and-morty-interface";
 
-const API_BASE_URL = "https://rickandmortyapi.com/api";
+const API_BASE_URL = import.meta.env.VITE_API_CHARACTER;
 import axios from "axios";
+import { ApiError } from './../../../core/error/api-error';
 export class RickAndMortyService {
   /**
    * Obtiene la lista de personajes de Rick and Morty

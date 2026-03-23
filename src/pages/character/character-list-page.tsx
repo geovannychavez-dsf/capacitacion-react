@@ -1,12 +1,12 @@
-import { ButtonCountCharter } from "../Components/button-count-characters";
-import { InputCharacter } from "../Components/input-charactes";
-import { CharacterCard } from "../Components/card-characters";
-import { ListCharacter } from "../Components/list-characters";
-import { useFetchCharacters } from "../Hooks/use-fetch-characters";
-import { useSearchCharacters } from "../Hooks/use-search-characters";
+import { ButtonCountCharter } from "../../components/button-count";
+import { InputCharacter } from "./components/input-charactes";
+import { CharacterCard } from "./components/card-characters";
+import { ListCharacter } from "./components/list-characters";
+import { useFetchCharacters } from "./hooks/use-fetch-characters";
+import { useSearchCharacters } from "./hooks/use-search-characters";
 import { Container } from "@mui/material";
-import AlertsMessage from "../Components/alert-meesage";
-import { ProgressItem } from "../Components/progress";
+import AlertsMessage from "../../Components/alert-meesage";
+import { ProgressItem } from "../../Components/progress";
 export const CharacterListScreen = () => {
   const { characters, loading, setPage, page, error } = useFetchCharacters();
   const { searchTerm, setSearchTerm, filteredCharacters } = useSearchCharacters(

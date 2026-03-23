@@ -1,6 +1,5 @@
-import { CharacterListScreen } from "./pages/character-list-page";
+import { CharacterListScreen } from "./pages/character/character-list-page";
 import { CssBaseline } from "@mui/material";
-import "./App.css";
 function App() {
   return (
     <>

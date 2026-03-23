@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { rickAndMortyService } from "../services/character-service";
 import { IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
-import { ApiError } from "../core/error/api-error";
+import { ApiError } from "../../../core/error/api-error";
 
 export const useFetchCharacters = () => {
     const [page, setPage] = useState<number>(1);
