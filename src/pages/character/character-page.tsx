@@ -1,12 +1,12 @@
-import { ButtonCountCharter } from "../../components/button-count";
-import { InputCharacter } from "./components/input-charactes";
-import { ListCharacter } from "./components/list-characters";
-import { useFetchCharacters } from "./hooks/use-fetch-characters";
-import { useSearchCharacters } from "./hooks/use-search-characters";
 import { Container } from "@mui/material";
-import AlertsMessage from "../../components/alert-meesage";
-import { ProgressItem } from "../../components/progress";
 import { containerCharacterStyle } from "./styles/contaniner";
+import { InputCharacter, ListCharacter } from "./components";
+import {
+  AlertsMessage,
+  ButtonCountCharter,
+  ProgressItem,
+} from "../../components";
+import { useFetchCharacters, useSearchCharacters } from "./hooks";
 export const CharacterListScreen = () => {
   const { characters, loading, setPage, page, error } = useFetchCharacters();
   const { searchTerm, setSearchTerm, filteredCharacters } = useSearchCharacters(

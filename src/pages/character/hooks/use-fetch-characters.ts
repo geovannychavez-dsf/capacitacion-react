@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { rickAndMortyService } from "../services/character-service";
 import { ApiError } from "../../../core/api-error";
 import type { IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
+import { rickAndMortyService } from "../services";
 
 
 export const useFetchCharacters = () => {
+    const contoller = new AbortController()
     const [page, setPage] = useState<number>(1);
     const [characters, setCharacters] = useState<IRickAndMortyResponse>({
         info: {
@@ -23,10 +24,11 @@ export const useFetchCharacters = () => {
      * @returns promesa que resuelve void
      */
     const fetchCharacters = async ({ page = 1 }: { page: number }): Promise<void> => {
+
         setError(null);
         setLoading(true);
         try {
-            const response = await rickAndMortyService.getCharacters(page);
+            const response = await rickAndMortyService.getCharacters(page, contoller.signal);
             setCharacters(response);
             setLoading(false);
         } catch (erro) {
@@ -45,6 +47,9 @@ export const useFetchCharacters = () => {
      */
     useEffect(() => {
         fetchCharacters({ page });
+        return () => {
+            contoller.abort()
+        }
     }, [page]);
 
     return { characters, loading, error, setPage, page };

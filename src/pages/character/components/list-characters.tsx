@@ -7,6 +7,7 @@ export const ListCharacter = ({ characters }: { characters: ICharacter[] }) => {
       {characters.map((character) => (
         <CharacterCard key={character.id} character={character} />
       ))}
+      {characters.length==0 &&(<p>No hay datos</p>)}
     </Grid>
   );
 };
