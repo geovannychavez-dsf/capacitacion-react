@@ -1,21 +1,25 @@
-
-import { ApiError } from "../../../core/api-error";
-import axios from "axios";
-import type { ICharacter, IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
-import { chartersAxios } from ".";
+import { ApiError } from '../../../core/api-error';
+import axios from 'axios';
+import { chartersAxios } from '.';
+import { Character, RickAndMortyResponse } from '../interfaces/rick-and-morty-interface';
+import { INICIO_PAGE_CHARACTER } from '../../../utils/types';
 export class RickAndMortyService {
   /**
    * Obtiene la lista de personajes de Rick and Morty
    * @param page entero que representa la página a consultar, por defecto es 1
    * @returns promesa con la respuesta de la API formateada como IRickAndMortyResponse
    */
-  async getCharacters(page: number = 1, signal: AbortSignal): Promise<IRickAndMortyResponse> {
+  async getCharacters(
+    page: number = INICIO_PAGE_CHARACTER,
+    abortSignal: AbortSignal,
+  ): Promise<RickAndMortyResponse> {
     try {
-      const { data } = await chartersAxios.get(`/character?page=${page}`,
-        { signal: signal });
+      const { data } = (await chartersAxios.get(`/character?page=${page}`, {
+        signal: abortSignal,
+      })) as { data: RickAndMortyResponse };
       return data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
+      if (axios.isCancel(error) || axios.isAxiosError(error)) {
         if (error.response) {
           throw new ApiError(error.response.status, error.response.data);
         }
@@ -29,10 +33,10 @@ export class RickAndMortyService {
    * @param id entero que representa el ID del personaje a consultar
    * @returns promesa con la respuesta de la API formateada como ICharacter
    */
-  async getCharacterById(id: number): Promise<ICharacter> {
+  async getCharacterById(id: number): Promise<Character> {
     try {
       const { data } = await chartersAxios.get(`/character/${id}`);
-      return data;
+      return data as Character;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {

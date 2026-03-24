@@ -1,29 +1,46 @@
-import React from "react";
-import type { IProps, IState } from "../interfaces/error-boundary";
+import React from 'react';
+import type { Props, State } from '../interfaces/error-boundary';
+import { alertReinteryStyle } from '../styles/alert-retry';
 
-export class ErrorBoundary extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+export class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(_: Error): IState {
-    // Update state so the next render will show the fallback UI.
+  static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
-  
-  componentDidCatch(error: Error, info: React.ErrorInfo): void {
-    // You can also log the error to an error reporting service
-    console.error("ErrorBoundary atrapó un error:", error, info);
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    if (this.props.onError) {
+      this.props.onError(error, info);
+    }
   }
+
+  handleRetry = () => {
+    this.setState({ hasError: false });
+  };
 
   render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Algo salió mal. Por favor, intenta de nuevo.</h1>;
+    const { hasError } = this.state;
+    const { FallbackComponent, children } = this.props;
+
+    if (hasError) {
+      if (FallbackComponent) {
+        return <FallbackComponent error={hasError} resetErrorBoundary={this.handleRetry} />;
+      }
+
+      return (
+        <div role="alert" style={alertReinteryStyle}>
+          <p>Algo salió mal. Por favor, inténtalo de nuevo.</p>
+          <button onClick={this.handleRetry}>Reintentar</button>
+        </div>
+      );
     }
 
-    return this.props.children;
+    return children;
   }
 }
+
+export default ErrorBoundary;

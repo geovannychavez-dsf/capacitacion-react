@@ -1,4 +1,5 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
+import { FIN_PAGE_CHARACTER, INICIO_PAGE_CHARACTER } from '../utils/types';
 
 interface ButtonCharterProps {
   isLoading?: boolean;
@@ -16,25 +17,25 @@ export const ButtonCountCharter = ({
   return (
     <div
       style={{
-        display: "flex",
-        gap: "15px",
+        display: 'flex',
+        gap: '15px',
       }}
     >
       <Button
         variant="contained"
         size="small"
-        disabled={isLoading || page === 1}
+        disabled={isLoading || page === INICIO_PAGE_CHARACTER}
         className="counter"
         onClick={decrementPage}
       >
-        {" "}
+        {' '}
         Anter.
       </Button>
       <p>{page}</p>
       <Button
         variant="contained"
         size="small"
-        disabled={isLoading||page === 42}
+        disabled={isLoading || page === FIN_PAGE_CHARACTER}
         className="counter"
         onClick={incrementPage}
       >

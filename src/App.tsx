@@ -1,14 +1,24 @@
-import { CssBaseline } from "@mui/material";
-import { CharacterListScreen } from "./pages/character/character-page";
-import { ErrorBoundary } from "./components";
-
+import { CssBaseline, LinearProgress } from '@mui/material';
+import { ErrorBoundary } from './components';
+import { StrictMode, Suspense, lazy } from 'react';
+import { FallbackError } from './components/fallback-error';
+import './styles/index.css';
+const CharacterListPage = lazy(() => import('./pages/character/character-page'));
 function App() {
   return (
     <>
-      <CssBaseline />
-      <ErrorBoundary>
-        <CharacterListScreen />
-      </ErrorBoundary>
+      <StrictMode>
+        <CssBaseline />
+        <ErrorBoundary
+          FallbackComponent={({ error, resetErrorBoundary }) => (
+            <FallbackError error={error} resetErrorBoundary={resetErrorBoundary} />
+          )}
+        >
+          <Suspense fallback={<LinearProgress />}>
+            <CharacterListPage />
+          </Suspense>
+        </ErrorBoundary>
+      </StrictMode>
     </>
   );
 }

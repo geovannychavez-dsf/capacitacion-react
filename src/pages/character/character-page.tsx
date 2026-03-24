@@ -1,20 +1,17 @@
-import { Container } from "@mui/material";
-import { containerCharacterStyle } from "./styles/contaniner";
-import { InputCharacter, ListCharacter } from "./components";
-import {
-  AlertsMessage,
-  ButtonCountCharter,
-  ProgressItem,
-} from "../../components";
-import { useFetchCharacters, useSearchCharacters } from "./hooks";
-export const CharacterListScreen = () => {
+import { Container } from '@mui/material';
+import { containerCharacterStyle } from './styles/contaniner';
+import { InputCharacter, ListCharacter } from './components';
+import { AlertsMessage, ButtonCountCharter, ProgressItem } from '../../components';
+import { useFetchCharacters, useSearchCharacters } from './hooks';
+import { INICIO_PAGE_CHARACTER } from '../../utils/types';
+const CharacterListPage = () => {
   const { characters, loading, setPage, page, error } = useFetchCharacters();
-  const { searchTerm, setSearchTerm, filteredCharacters } = useSearchCharacters(
-    characters.results,
-  );
-  const isLoading = loading && page === 1;
-  const incrementPage = () => setPage((page) => page + 1);
-  const decrementPage = () => setPage((page) => page - 1);
+
+  const { searchTerm, setSearchTerm, filteredCharacters } = useSearchCharacters(characters);
+  const isLoading = loading && page === INICIO_PAGE_CHARACTER;
+  const incrementPage = () => setPage((page: number) => page + INICIO_PAGE_CHARACTER);
+  const decrementPage = () => setPage((page: number) => page - INICIO_PAGE_CHARACTER);
+
   return (
     <Container style={containerCharacterStyle}>
       {error && <AlertsMessage severity="error" message={error} />}
@@ -30,3 +27,4 @@ export const CharacterListScreen = () => {
     </Container>
   );
 };
+export default CharacterListPage;

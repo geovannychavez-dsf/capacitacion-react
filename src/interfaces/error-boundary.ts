@@ -1,10 +1,11 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-export interface IProps {
+export interface Props {
   children: ReactNode;
-  fallback?: ReactNode;
+  FallbackComponent: React.ComponentType<{ error: boolean; resetErrorBoundary: () => void }>;
+  onError?: (error: Error, info: React.ErrorInfo) => void;
 }
 
-export interface IState {
+export interface State {
   hasError: boolean;
 }

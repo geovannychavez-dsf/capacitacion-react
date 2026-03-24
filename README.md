@@ -8,10 +8,9 @@ Este proyecto es una aplicación de React creada con Vite, que consume la API de
 
 - `src/Components`: Contiene los componentes de la aplicación, como el botón de pag
   inación.
-- `src/Hooks`: Contiene los hooks personalizados, como `useFetchCharacters`, que se encarga de la lógica de obtención de datos.
+- `src/pages/character/Hooks`: Contiene los hooks personalizados, como `useFetchCharacters`, que se encarga de la lógica de obtención de datos.
   `useSearchCharacters` para la lógica de búsqueda de personajes.
-- `src/services`: Contiene los servicios para interactuar con la API de Rick and Morty, como `RickAndMortyService
-- `src/screens`: Contiene las pantallas de la aplicación, como `CharactersScreen`, que muestra la lista de personajes.
+- `src/pages/character/services`: Contiene los servicios para interactuar con la API de Rick and Morty, como `RickAndMortyService
 - `src/App.tsx`: El componente principal de la aplicación que integra todos los componentes y hooks.
 
 ## Tecnologías utilizadas
@@ -22,6 +21,7 @@ Este proyecto es una aplicación de React creada con Vite, que consume la API de
 - Fetch API: Para realizar solicitudes HTTP a la API de Rick and Morty.
 
 ## variables de entorno
+
 VITE_API_CHARACTER='https://rickandmortyapi.com/api'
 VITE_USERNAME_CHARACTER=''
 VITE_USERNAME_CHARACTER=''

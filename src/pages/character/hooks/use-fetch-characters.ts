@@ -1,56 +1,45 @@
-import { useEffect, useState } from "react";
-import { ApiError } from "../../../core/api-error";
-import type { IRickAndMortyResponse } from "../interfaces/rick-and-morty-interface";
-import { rickAndMortyService } from "../services";
-
+import { useEffect, useState } from 'react';
+import { ApiError } from '../../../core/api-error';
+import { rickAndMortyService } from '../services';
+import { Character } from '../interfaces/rick-and-morty-interface';
+import { characterAdapter } from '../adapters/character-adapter';
 
 export const useFetchCharacters = () => {
-    const contoller = new AbortController()
-    const [page, setPage] = useState<number>(1);
-    const [characters, setCharacters] = useState<IRickAndMortyResponse>({
-        info: {
-            count: 0,
-            pages: 0,
-            next: null,
-            prev: null
-        },
-        results: []
-    });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    /**
-     * Consume el servicio para obtener los personajes de Rick and Morty, actualiza el estado de characters, loading y error según corresponda.
-     * @param page entero que representa la página a consultar, por defecto es 1
-     * @returns promesa que resuelve void
-     */
+  const [page, setPage] = useState<number>(1);
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  /**
+   * Consume el servicio para obtener los personajes de Rick and Morty, actualiza el estado de characters, loading y error según corresponda.
+   * @param page entero que representa la página a consultar, por defecto es 1
+   * @returns promesa que resuelve
+   */
+
+  useEffect(() => {
+    const contoller = new AbortController();
     const fetchCharacters = async ({ page = 1 }: { page: number }): Promise<void> => {
-
-        setError(null);
-        setLoading(true);
-        try {
-            const response = await rickAndMortyService.getCharacters(page, contoller.signal);
-            setCharacters(response);
-            setLoading(false);
-        } catch (erro) {
-            if (erro instanceof ApiError) {
-                setError(erro.message);
-            } else {
-                setError("Error inesperado");
-            }
-        } finally {
-            setLoading(false);
+      setError(null);
+      setLoading(true);
+      try {
+        const characters = await rickAndMortyService.getCharacters(page, contoller.signal);
+        const characterAdaptes = characterAdapter({ characters: characters.results });
+        setCharacters(characterAdaptes);
+        setLoading(false);
+      } catch (error) {
+        if (error instanceof ApiError) {
+          setError(error.message);
         }
+      } finally {
+        if (!contoller.signal.aborted) {
+          setLoading(false);
+        }
+      }
     };
-    /**
-     * useEfect se ejecuta cada que se monta el componente 
-     * o cada que se actualiza el estado de page 
-     */
-    useEffect(() => {
-        fetchCharacters({ page });
-        return () => {
-            contoller.abort()
-        }
-    }, [page]);
+    void fetchCharacters({ page }).catch(console.error);
+    return () => {
+      contoller.abort();
+    };
+  }, [page]);
 
-    return { characters, loading, error, setPage, page };
-}
+  return { characters, loading, error, setPage, page };
+};
