@@ -16,12 +16,12 @@ export const useFetchCharacters = () => {
    */
 
   useEffect(() => {
-    const contoller = new AbortController();
+    const controller = new AbortController();
     const fetchCharacters = async ({ page = 1 }: { page: number }): Promise<void> => {
       setError(null);
       setLoading(true);
       try {
-        const characters = await rickAndMortyService.getCharacters(page, contoller.signal);
+        const characters = await rickAndMortyService.getCharacters(page, controller.signal);
         const characterAdaptes = characterAdapter({ characters: characters.results });
         setCharacters(characterAdaptes);
         setLoading(false);
@@ -30,14 +30,14 @@ export const useFetchCharacters = () => {
           setError(error.message);
         }
       } finally {
-        if (!contoller.signal.aborted) {
+        if (!controller.signal.aborted) {
           setLoading(false);
         }
       }
     };
     void fetchCharacters({ page }).catch(console.error);
     return () => {
-      contoller.abort();
+      controller.abort();
     };
   }, [page]);
 
