@@ -9,7 +9,7 @@ export default function ProgressPage() {
   const [progress, setProgress] = React.useState(0);
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((oldProgress) => {
+      setProgress((oldProgress: number) => {
         if (oldProgress === OLD_PROGRESS) {
           return 0;
         }

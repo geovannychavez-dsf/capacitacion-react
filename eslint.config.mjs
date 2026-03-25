@@ -2,6 +2,9 @@ import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks'; // [CAMBIO] agregar plugin instalado
+import reactRefresh from 'eslint-plugin-react-refresh'; // [CAMBIO] agregar plugin instalado
+import prettierPlugin from 'eslint-plugin-prettier'; // [CAMBIO] integrar prettier en eslint
 
 export default defineConfig(
   {
@@ -15,6 +18,9 @@ export default defineConfig(
       '*.json',
       'eslint.config.mjs',
       'package.json',
+      'src/vite-env.d.ts',
+      'docs',
+      '**.md'
     ],
   },
   eslint.configs.recommended,
@@ -22,43 +28,54 @@ export default defineConfig(
   {
     languageOptions: {
       parserOptions: {
-        tsconfigRootDir: import.meta.dirname,
+        project: ['./tsconfig.app.json'], // [CAMBIO] apuntar a tsconfig.app.json, no al raíz
+        tsconfigRootDir: import.meta.dirname, //          tsconfig.json raíz tiene files:[] vacío
       },
     },
     plugins: {
       react,
+      'react-hooks': reactHooks, // [CAMBIO]
+      'react-refresh': reactRefresh, // [CAMBIO]
+      prettier: prettierPlugin, // [CAMBIO]
     },
     settings: {
       react: {
         version: 'detect',
       },
-    }
+    },
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
-    "extends": ["@commitlint/config-conventional"],
     rules: {
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      ...reactHooks.configs.recommended.rules, // [CAMBIO] rules-of-hooks + exhaustive-deps
+      'react-refresh/only-export-components': 'warn', // [CAMBIO]
+      'prettier/prettier': 'warn', // [CAMBIO] reportar diferencias de formato
       '@typescript-eslint/no-unsafe-return': 'error',
       '@typescript-eslint/no-unsafe-call': 'error',
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-unsafe-member-access': 'error',
-      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'off', 
+      '@typescript-eslint/typedef': [
+  'error',
+  {
+    parameter: true,           // exige tipo en parámetros de funciones normales
+    arrowParameter: true,      // exige tipo en parámetros de arrow functions
+  },
+],
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],
       '@typescript-eslint/naming-convention': [
         'warn',
-        // 1. PascalCase: Clases, interfaces, tipos (typeLike)
         {
           selector: 'typeLike',
           format: ['PascalCase'],
         },
-        // 2. camelCase: Funciones y Métodos
         {
           selector: ['function', 'method'],
-          format: ['camelCase'],
+          format: ['camelCase', 'PascalCase'], // [CAMBIO] PascalCase para componentes funcionales
         },
         {
           selector: 'function',
@@ -69,31 +86,24 @@ export default defineConfig(
             match: true,
           },
         },
-        // 3. UPPER_CASE: Constantes (variables con modificador 'const')
         {
           selector: 'variable',
           modifiers: ['const'],
-          format: ['UPPER_CASE'],
+          format: ['UPPER_CASE', 'camelCase', 'PascalCase'], // [CAMBIO] permite componentes y hooks como const
         },
-        // 4. UPPER_CASE: Enums y sus miembros
         {
           selector: ['enum', 'enumMember'],
           format: ['UPPER_CASE'],
         },
-        // 5. camelCase: Variables (que no sean constantes)
         {
           selector: 'variable',
           format: ['camelCase'],
-          // Excluimos las que ya capturamos como constantes arriba
           filter: {
             regex: '^[A-Z_]+$',
             match: false,
           },
         },
       ],
-      'react/jsx-pascal-case': 'error',
-    },
-    rules: {
       'react/jsx-pascal-case': [
         'error',
         {
