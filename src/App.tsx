@@ -17,6 +17,13 @@ function App() {
             error: boolean;
             resetErrorBoundary: () => void;
           }) => <FallbackError error={error} resetErrorBoundary={resetErrorBoundary} />}
+          onError={(error: Error, info: React.ErrorInfo) => {
+            console.error(
+              'error boundary puede enviar algun mensaje externo a un canal',
+              error,
+              info,
+            );
+          }}
         >
           <Suspense fallback={<LinearProgress />}>
             <CharacterListPage />

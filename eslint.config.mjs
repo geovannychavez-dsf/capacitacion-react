@@ -2,9 +2,9 @@ import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks'; // [CAMBIO] agregar plugin instalado
-import reactRefresh from 'eslint-plugin-react-refresh'; // [CAMBIO] agregar plugin instalado
-import prettierPlugin from 'eslint-plugin-prettier'; // [CAMBIO] integrar prettier en eslint
+import reactHooks from 'eslint-plugin-react-hooks'; 
+import reactRefresh from 'eslint-plugin-react-refresh'; 
+import prettierPlugin from 'eslint-plugin-prettier'; 
 
 export default defineConfig(
   {
@@ -28,15 +28,15 @@ export default defineConfig(
   {
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.app.json'], // [CAMBIO] apuntar a tsconfig.app.json, no al raíz
-        tsconfigRootDir: import.meta.dirname, //          tsconfig.json raíz tiene files:[] vacío
+        project: ['./tsconfig.app.json'], 
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     plugins: {
       react,
-      'react-hooks': reactHooks, // [CAMBIO]
-      'react-refresh': reactRefresh, // [CAMBIO]
-      prettier: prettierPlugin, // [CAMBIO]
+      'react-hooks': reactHooks, 
+      'react-refresh': reactRefresh, 
+      prettier: prettierPlugin, 
     },
     settings: {
       react: {
@@ -50,9 +50,9 @@ export default defineConfig(
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
-      ...reactHooks.configs.recommended.rules, // [CAMBIO] rules-of-hooks + exhaustive-deps
-      'react-refresh/only-export-components': 'warn', // [CAMBIO]
-      'prettier/prettier': 'warn', // [CAMBIO] reportar diferencias de formato
+      ...reactHooks.configs.recommended.rules, 
+      'react-refresh/only-export-components': 'warn',
+      'prettier/prettier': 'warn', 
       '@typescript-eslint/no-unsafe-return': 'error',
       '@typescript-eslint/no-unsafe-call': 'error',
       '@typescript-eslint/no-floating-promises': 'error',
@@ -75,7 +75,7 @@ export default defineConfig(
         },
         {
           selector: ['function', 'method'],
-          format: ['camelCase', 'PascalCase'], // [CAMBIO] PascalCase para componentes funcionales
+          format: ['camelCase', 'PascalCase'], 
         },
         {
           selector: 'function',
@@ -89,7 +89,7 @@ export default defineConfig(
         {
           selector: 'variable',
           modifiers: ['const'],
-          format: ['UPPER_CASE', 'camelCase', 'PascalCase'], // [CAMBIO] permite componentes y hooks como const
+          format: ['UPPER_CASE', 'camelCase', 'PascalCase'], 
         },
         {
           selector: ['enum', 'enumMember'],

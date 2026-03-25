@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import * as motion from 'motion/react-client';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import { ReportOff } from '@mui/icons-material';
 export const FallbackError = ({
   error,
   resetErrorBoundary,
@@ -27,7 +27,7 @@ export const FallbackError = ({
           flexDirection={'column'}
           height={'100'}
         >
-          <ReportProblemIcon color="error" sx={{ fontSize: 100 }} />
+          <ReportOff color="error" sx={{ fontSize: 100 }} />
           <Typography variant="body1">{error && 'Ocurrio un error'}</Typography>
           <Typography variant="body1">
             Intente nuevamente o comuniquese con el administrador
