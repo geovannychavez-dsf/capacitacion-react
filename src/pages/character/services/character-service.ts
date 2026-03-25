@@ -2,7 +2,7 @@ import { ApiError } from '../../../core/api-error';
 import axios from 'axios';
 import { chartersAxios } from '.';
 import { Character, RickAndMortyResponse } from '../interfaces/rick-and-morty-interface';
-import { INICIO_PAGE_CHARACTER } from '../../../utils/types';
+import { INICIO_PAGE_CHARACTER } from '../constants/character-constants';
 export class RickAndMortyService {
   /**
    * Obtiene la lista de personajes de Rick and Morty

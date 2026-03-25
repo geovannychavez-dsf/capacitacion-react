@@ -22,8 +22,12 @@ export const CharacterCard = ({ character }: { character: Character }) => {
         <CardContent>
           <Typography variant="h6">{character.name}...</Typography>
           <Typography variant="body2">
-            <Typography variant="caption">Status: {character.status}</Typography>
-            <Typography variant="caption">Species: {character.species}</Typography>
+            <Typography variant="caption" sx={{ display: 'block' }}>
+              Status: {character.status}
+            </Typography>
+            <Typography variant="caption" sx={{ display: 'block' }}>
+              Species: {character.species}
+            </Typography>
             <Typography variant="caption">Gender: {character.gender}</Typography>
           </Typography>
         </CardContent>

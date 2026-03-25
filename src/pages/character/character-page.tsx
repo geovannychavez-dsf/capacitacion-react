@@ -3,7 +3,7 @@ import { containerCharacterStyle } from './styles/contaniner';
 import { InputCharacter, ListCharacter } from './components';
 import { AlertsMessage, ButtonCountCharter, ProgressItem } from '../../components';
 import { useFetchCharacters, useSearchCharacters } from './hooks';
-import { INICIO_PAGE_CHARACTER } from '../../utils/types';
+import { INICIO_PAGE_CHARACTER } from './constants/character-constants';
 const CharacterListPage = () => {
   const { characters, loading, setPage, page, error } = useFetchCharacters();
 

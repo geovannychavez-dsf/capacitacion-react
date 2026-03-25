@@ -3,7 +3,7 @@ import { Character } from '../interfaces/rick-and-morty-interface';
 export const characterAdapter = ({ characters }: { characters: Character[] }): Character[] => {
   return characters.map((character: Character) => ({
     id: character.id,
-    name: character.name.substring(0, 12),
+    name: character.name.substring(0, 18),
     status: character.status,
     species: character.species,
     type: character.type,
