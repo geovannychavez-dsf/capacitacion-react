@@ -11,6 +11,7 @@ const CharacterListPage = () => {
   const isLoading = loading && page === INICIO_PAGE_CHARACTER;
   const incrementPage = () => setPage((page: number) => page + INICIO_PAGE_CHARACTER);
   const decrementPage = () => setPage((page: number) => page - INICIO_PAGE_CHARACTER);
+
   return (
     <Container style={containerCharacterStyle}>
       {error && <AlertsMessage severity="error" message={error} />}

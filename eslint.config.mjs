@@ -32,6 +32,9 @@ export default defineConfig(
         tsconfigRootDir: import.meta.dirname,
         strict: true,
         ecmaVersion: 'latest',
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
     plugins: {
@@ -50,9 +53,6 @@ export default defineConfig(
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
       'no-console': ['error', { allow: ['warn', 'error'] }],
-      ...react.configs.recommended.rules,
-      ...react.configs['jsx-runtime'].rules,
-      ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': 'warn',
       'prettier/prettier': 'warn',
       '@typescript-eslint/no-unsafe-return': 'error',
@@ -76,11 +76,6 @@ export default defineConfig(
           format: ['PascalCase'],
         },
         {
-          selector: ['variable'],
-          modifiers: ['exported', 'const'],
-          format: ['PascalCase', 'camelCase'],
-        },
-        {
           selector: ['function', 'method'],
           format: ['camelCase', 'PascalCase'],
         },
@@ -93,15 +88,8 @@ export default defineConfig(
           selector: ['enum', 'enumMember'],
           format: ['UPPER_CASE'],
         },
-        {
-          selector: 'variable',
-          format: ['camelCase'],
-          filter: {
-            regex: '^[A-Z_]+$',
-            match: false,
-          },
-        },
       ],
+
       'react/jsx-pascal-case': [
         'error',
         {
@@ -137,6 +125,15 @@ export default defineConfig(
         {
           selector: ['enum', 'enumMember'],
           format: ['UPPER_CASE'],
+        },
+        {
+          "selector": "function",
+          "modifiers": ["exported"],
+          "filter": {
+            "regex": "^([A-Z][a-zA-Z0-9]*)$",
+            "match": true
+          },
+          "format": ["PascalCase"]
         },
         {
           selector: 'variable',
