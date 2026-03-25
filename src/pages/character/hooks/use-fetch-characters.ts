@@ -23,6 +23,7 @@ export const useFetchCharacters = () => {
       try {
         const characters = await rickAndMortyService.getCharacters(page, controller.signal);
         const characterAdaptes = characterAdapter({ characters: characters.results });
+        console.log(characterAdaptes);
         setCharacters(characterAdaptes);
         setLoading(false);
       } catch (error) {
@@ -35,7 +36,7 @@ export const useFetchCharacters = () => {
         }
       }
     };
-    void fetchCharacters({ page }).catch(console.error);
+    void fetchCharacters({ page }).catch((error) => console.error(error));
     return () => {
       controller.abort();
     };

@@ -4,7 +4,7 @@ export const useSearchCharacters = (characters: Character[]) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const filteredCharacters = useMemo(() => {
-    return characters.filter((character: Character) =>
+    return characters.filter((character) =>
       character.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [searchTerm, characters]);
