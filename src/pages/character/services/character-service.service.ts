@@ -15,9 +15,9 @@ export class RickAndMortyService {
     abortSignal: AbortSignal,
   ): Promise<RickAndMortyResponse> {
     try {
-      const { data } = (await chartersAxios.get(`/character?page=${page}`, {
+      const { data } = await chartersAxios.get(`/character?page=${page}`, {
         signal: abortSignal,
-      })) as { data: RickAndMortyResponse };
+      });
       return data;
     } catch (error) {
       if (axios.isCancel(error) || axios.isAxiosError(error)) {
