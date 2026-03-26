@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
-import { CharacterCard } from './card-characters';
-import { Character } from '../interfaces/rick-and-morty-interface';
+
+import { CharacterCard } from './CharacterCard';
+import { Character } from '../interfaces/rick-api.interface';
 export const ListCharacter = ({ characters }: { characters: Character[] }) => {
   return (
     <Grid container spacing={2}>

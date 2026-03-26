@@ -1,4 +1,4 @@
-import { Character } from '../interfaces/rick-and-morty-interface';
+import { Character } from '../interfaces/rick-api.interface';
 
 export const characterAdapter = ({ characters }: { characters: Character[] }): Character[] => {
   return characters.map((character: Character) => ({

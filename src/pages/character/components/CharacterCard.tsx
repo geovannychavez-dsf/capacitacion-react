@@ -1,6 +1,7 @@
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import * as motion from 'motion/react-client';
-import { Character } from '../interfaces/rick-and-morty-interface';
+
+import { Character } from '../interfaces/rick-api.interface';
 
 export const CharacterCard = ({ character }: { character: Character }) => {
   return (

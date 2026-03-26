@@ -1,7 +1,8 @@
 import { CssBaseline, LinearProgress } from '@mui/material';
-import { ErrorBoundary } from './components';
 import { StrictMode, Suspense, lazy } from 'react';
-import { FallbackError } from './components/fallback-error';
+
+import { ErrorBoundary } from './components';
+import { FallbackError } from './components/FallbackError';
 import './styles/index.css';
 const CharacterListPage = lazy(() => import('./pages/character/character-page'));
 

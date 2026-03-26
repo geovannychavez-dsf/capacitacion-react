@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { handleResponse, handleResponseError } from './interceptor/handel-reponse';
-import { handleRequestCharter } from './interceptor';
+
+import { handleRequestCharter } from '../interceptor';
+import { handleResponse, handleResponseError } from '../interceptor/handle-response.interceptor';
 const API_BASE_URL = import.meta.env.VITE_API_CHARACTER;
 const chartersAxios = axios.create({
   baseURL: API_BASE_URL,
