@@ -31,9 +31,11 @@ const RouterApp = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/">
-          <Navigate to="/login" />
-        </Route>
+        <Route path="/"
+        element={<Navigate to="/login" />}
+        
+        />
+          
       </Routes>
     </BrowserRouter>
   );
