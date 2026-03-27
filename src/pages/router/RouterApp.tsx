@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
 import ProgressPage from '../../components/ProgressPage';
 import { ProtectedRoute } from '../../components/ProtectedRoute';
@@ -31,6 +31,9 @@ const RouterApp = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/">
+          <Navigate to="/login" />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
