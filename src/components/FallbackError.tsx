@@ -1,6 +1,6 @@
+import { ReportOff } from '@mui/icons-material';
 import { Box, Button, Container, Typography } from '@mui/material';
 import * as motion from 'motion/react-client';
-import { ReportOff } from '@mui/icons-material';
 export const FallbackError = ({
   error,
   resetErrorBoundary,

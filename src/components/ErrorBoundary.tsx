@@ -1,5 +1,6 @@
 import React from 'react';
-import type { Props, State } from '../interfaces/error-boundary';
+
+import type { Props, State } from '../interfaces/error-boundary.interface';
 import { alertReinteryStyle } from '../styles/alert-retry';
 
 export class ErrorBoundary extends React.Component<Props, State> {

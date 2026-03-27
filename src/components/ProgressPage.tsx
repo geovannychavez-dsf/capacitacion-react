@@ -1,8 +1,9 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import * as React from 'react';
 import { useEffect } from 'react';
-import SkeletonPage from './skeleton-page';
+
+import SkeletonPage from './SkeletonPage';
 const OLD_PROGRESS = 100;
 const INITIAL_PROGRESS = 10;
 
@@ -14,7 +15,7 @@ export default function ProgressPage() {
         if (oldProgress === OLD_PROGRESS) {
           return 0;
         }
-        const diff = Math.random() * INITIAL_PROGRESS;
+        const diff = INITIAL_PROGRESS;
         return Math.min(oldProgress + diff, OLD_PROGRESS);
       });
     }, 500);

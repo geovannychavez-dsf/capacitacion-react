@@ -1,4 +1,4 @@
-export { ButtonCountCharter } from './button-count';
-export { CharacterCard } from './card-characters';
-export { InputCharacter } from './input-charactes';
-export { ListCharacter } from './list-characters';
+export { ButtonCountCharter } from './ButtonCountCharter';
+export { CharacterCard } from './CharacterCard';
+export { InputCharacter } from './InputCharacter';
+export { ListCharacter } from './ListCharacter';

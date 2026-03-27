@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Character } from '../interfaces/rick-and-morty-interface';
+
+import { Character } from '../interfaces/rick-and-morty.interface';
 export const useSearchCharacters = (characters: Character[]) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 

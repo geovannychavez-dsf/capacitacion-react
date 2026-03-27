@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+
 import { ApiError } from '../../../core/api-error';
+import { characterAdapter } from '../adapters/character.adapter';
+import { Character } from '../interfaces/rick-and-morty.interface';
 import { rickAndMortyService } from '../services';
-import { Character } from '../interfaces/rick-and-morty-interface';
-import { characterAdapter } from '../adapters/character-adapter';
 
 export const useFetchCharacters = () => {
   const [page, setPage] = useState<number>(1);
@@ -35,7 +36,7 @@ export const useFetchCharacters = () => {
         }
       }
     };
-    void fetchCharacters({ page }).catch(console.error);
+    fetchCharacters({ page }).catch(console.error);
     return () => {
       controller.abort();
     };
