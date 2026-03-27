@@ -3,7 +3,7 @@ import { Character } from '../interfaces/rick-api.interface';
 export const characterAdapter = ({ characters }: { characters: Character[] }): Character[] => {
   return characters.map((character: Character) => ({
     id: character.id,
-    name: character.name.substring(0, 18),
+    name: character.name.substring(0, 12),
     status: character.status,
     species: character.species,
     type: character.type,
@@ -11,8 +11,5 @@ export const characterAdapter = ({ characters }: { characters: Character[] }): C
     origin: character.origin,
     location: character.location,
     image: character.image,
-    url: character.url,
-    episode: character.episode,
-    created: character.created,
   }));
 };

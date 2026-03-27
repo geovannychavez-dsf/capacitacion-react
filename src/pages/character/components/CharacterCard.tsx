@@ -1,4 +1,5 @@
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Delete } from '@mui/icons-material';
+import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import * as motion from 'motion/react-client';
 
 import { Character } from '../interfaces/rick-api.interface';
@@ -19,6 +20,7 @@ export const CharacterCard = ({ character }: { character: Character }) => {
           component="img"
           image={character.image}
           alt={character.name}
+          onClick={() => console.error(character)}
         />
         <CardContent>
           <Typography variant="h6">{character.name}...</Typography>
@@ -32,6 +34,12 @@ export const CharacterCard = ({ character }: { character: Character }) => {
             <Typography variant="caption">Gender: {character.gender}</Typography>
           </Typography>
         </CardContent>
+        <CardActions>
+          <Button color="error" size="small" variant="contained">
+            <Typography>Eliminar</Typography>
+            <Delete />
+          </Button>
+        </CardActions>
       </Card>
     </motion.div>
   );

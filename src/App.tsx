@@ -1,31 +1,29 @@
-import { CssBaseline, LinearProgress } from '@mui/material';
-import { StrictMode, Suspense, lazy } from 'react';
+import { CssBaseline } from '@mui/material';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { StrictMode } from 'react';
 
 import { ErrorBoundary } from './components';
 import { FallbackError } from './components/FallbackError';
 import './styles/index.css';
-const CharacterListPage = lazy(() => import('./pages/character/character-page'));
+import RouterApp from './pages/router/RouterApp';
 
 function App() {
+  const queryClient = new QueryClient();
   return (
     <StrictMode>
-      <CssBaseline />
-      <ErrorBoundary
-        FallbackComponent={({ error, resetErrorBoundary }) => (
-          <FallbackError error={error} resetErrorBoundary={resetErrorBoundary} />
-        )}
-        onError={(error: Error, info: React.ErrorInfo) => {
-          console.error(
-            'error boundary puede enviar algun mensaje externo a un canal',
-            error,
-            info,
-          );
-        }}
-      >
-        <Suspense fallback={<LinearProgress />}>
-          <CharacterListPage />
-        </Suspense>
-      </ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <CssBaseline />
+        <ErrorBoundary
+          FallbackComponent={({ error, resetErrorBoundary }) => (
+            <FallbackError error={error} resetErrorBoundary={resetErrorBoundary} />
+          )}
+          onError={(error: Error, info: React.ErrorInfo) => {
+            console.error('Error global', error, info);
+          }}
+        >
+          <RouterApp />
+        </ErrorBoundary>
+      </QueryClientProvider>
     </StrictMode>
   );
 }
