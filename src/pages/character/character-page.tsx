@@ -15,13 +15,11 @@ const CharacterListPage = () => {
   const { searchTerm, setSearchTerm, filteredCharacters } = useSearchCharacters(
     charactersApi ?? [],
   );
-
   return (
     <Container style={containerCharacterStyle}>
       {errorApi && <AlertsMessage severity="error" message={errorApi.message} />}
       <ProgressItem loading={isLoadingApi} />
       <InputCharacter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
       <ListCharacter characters={filteredCharacters} />
     </Container>
   );

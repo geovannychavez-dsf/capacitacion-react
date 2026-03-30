@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { ApiError } from '../../../core/api-error';
 import axiosIntancesService from '../../../services/axion-intances.service';
+import { MESSAGE_ERROR } from '../constants/character-constants';
 import { Character } from '../interfaces/rick-api.interface';
 
 export class CharacterApiService {
@@ -16,7 +17,7 @@ export class CharacterApiService {
           throw new ApiError(error.response.status, error.response.data.message);
         }
       }
-      throw new Error('Error en la peticion');
+      throw new ApiError(500, 'Error en la peticion');
     }
   }
   async getCharacters(): Promise<Character[]> {
@@ -30,40 +31,42 @@ export class CharacterApiService {
           throw new ApiError(error.response.status, error.response.data.message);
         }
       }
-      throw new Error('Error en la peticion');
+      throw new ApiError(500, MESSAGE_ERROR);
     }
   }
   async createCharacter(character: Character): Promise<Character> {
     try {
       const { data } = await axiosIntancesService.post('/character', character);
-      return data;
+      const { data: characterData } = data;
+      return characterData;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
           throw new ApiError(error.response.status, error.response.data.message);
         }
       }
-      throw new Error('Error en la peticion');
+      throw new ApiError(500, MESSAGE_ERROR);
     }
   }
 
   async deleteCharacter(id: number): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.delete(`/character/${id}`);
-      return data;
+      const { data } = await axiosIntancesService.delete(`/characters/${id}`);
+      const { data: characterData } = data;
+      return characterData;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
           throw new Error(error.response.data);
         }
       }
-      throw new Error('Error en la peticion');
+      throw new ApiError(500, MESSAGE_ERROR);
     }
   }
 
   async updateCharacter(id: number, character: Character): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.put(`/character/${id}`, character);
+      const { data } = await axiosIntancesService.put(`/characters/${id}`, character);
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -71,7 +74,7 @@ export class CharacterApiService {
           throw new ApiError(error.response.status, error.response.data.message);
         }
       }
-      throw new Error('Error en la peticion');
+      throw new ApiError(500, MESSAGE_ERROR);
     }
   }
 }

@@ -22,8 +22,6 @@ export interface Character {
   species: string;
   type: string;
   gender: string;
-  origin: Origin;
-  location: Location;
   image: string;
 }
 

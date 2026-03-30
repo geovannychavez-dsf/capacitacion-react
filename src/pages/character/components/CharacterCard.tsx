@@ -36,7 +36,6 @@ export const CharacterCard = ({ character }: { character: Character }) => {
         </CardContent>
         <CardActions>
           <Button color="error" size="small" variant="contained">
-            <Typography>Eliminar</Typography>
             <Delete />
           </Button>
         </CardActions>

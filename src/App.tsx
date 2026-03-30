@@ -5,6 +5,7 @@ import { StrictMode } from 'react';
 import { ErrorBoundary } from './components';
 import { FallbackError } from './components/FallbackError';
 import './styles/index.css';
+import { Toast } from './components/Toaster';
 import RouterApp from './pages/router/RouterApp';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         >
           <RouterApp />
         </ErrorBoundary>
+        <Toast />
       </QueryClientProvider>
     </StrictMode>
   );

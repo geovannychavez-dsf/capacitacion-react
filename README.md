@@ -22,7 +22,7 @@ Este proyecto es una aplicación de React creada con Vite, que consume la API de
 
 ## variables de entorno
 
-VITE_API_CHARACTER='https://rickandmortyapi.com/api'
+VITE_API_CHARACTER='http://localhost:port/api/v1'
 VITE_USERNAME_CHARACTER=''
 VITE_USERNAME_CHARACTER=''
 

@@ -33,7 +33,7 @@ const useLogin = () => {
       const loginActin = await authService.login(values);
       if (loginActin.status) {
         setUser(loginActin.data.token);
-        localStorage.setItem(TOKEN, loginActin.data.token);
+        sessionStorage.setItem(TOKEN, loginActin.data.token);
         navigate('/home');
       }
     } catch (error) {
