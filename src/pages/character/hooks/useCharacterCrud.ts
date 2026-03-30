@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { ApiError } from '../../../core/api-error';
-import { CHARACTER_QUERY, DURATION } from '../constants/character-constants';
+import { CHARACTER_QUERY } from '../constants/character-constants';
 import type { Character } from '../interfaces/rick-api.interface';
 import { characterApiService } from '../services/character-api.service';
+import { ToastOpction } from '../styles/contaniner';
 
 export const useCharacterCrud = () => {
   const queryClient = useQueryClient();
@@ -30,7 +31,7 @@ export const useCharacterCrud = () => {
     },
     onError: (error, newCharar, context) => {
       if (error instanceof ApiError) {
-        toast.error(error.message + ' no se agrego ' + newCharar.name, { duration: DURATION });
+        toast.error(error.message + ' no se agrego ' + newCharar.name, ToastOpction);
       }
       if (context?.previousCharacters) {
         queryClient.setQueryData([CHARACTER_QUERY], context.previousCharacters);
@@ -58,14 +59,12 @@ export const useCharacterCrud = () => {
     },
     mutationFn: async (newCharacter: Character) => {
       const character = await characterApiService.updateCharacter(newCharacter);
-      toast.success('Personaje actualizado', { duration: DURATION });
+      toast.success('Personaje actualizado', ToastOpction);
       return character;
     },
     onError: (error, newCharar, context) => {
       if (error instanceof ApiError) {
-        toast.error(' no se actualizo ' + newCharar.name + ' ' + error.message, {
-          duration: DURATION,
-        });
+        toast.error(' no se actualizo ' + newCharar.name + ' ' + error.message, ToastOpction);
       }
       if (context?.previousCharacters) {
         queryClient.setQueryData([CHARACTER_QUERY], context.previousCharacters);
@@ -76,6 +75,10 @@ export const useCharacterCrud = () => {
     },
   });
   const deleteCharacter = useMutation<number, ApiError, number>({
+    mutationFn: async (id: number) => {
+      await characterApiService.deleteCharacter(id);
+      return id;
+    },
     onMutate: async (id: number) => {
       await queryClient.cancelQueries({ queryKey: [CHARACTER_QUERY] });
       const previousCharacters = queryClient.getQueryData([CHARACTER_QUERY]);
@@ -83,10 +86,6 @@ export const useCharacterCrud = () => {
         ...previousCharacters.filter((character) => character.id !== id),
       ]);
       return { previousCharacters };
-    },
-    mutationFn: async (id: number) => {
-      await characterApiService.deleteCharacter(id);
-      return id;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [CHARACTER_QUERY] });
@@ -96,7 +95,7 @@ export const useCharacterCrud = () => {
     },
     onError: (error) => {
       if (error instanceof ApiError) {
-        toast.error(error.message, { duration: DURATION });
+        toast.error(error.message, ToastOpction);
       }
     },
   });

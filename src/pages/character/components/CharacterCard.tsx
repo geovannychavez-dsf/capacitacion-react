@@ -18,7 +18,7 @@ export const CharacterCard = ({
   const { deleteCharacter } = useCharacterCrud();
   const queryClient = useQueryClient();
   const handleDelete = (character: Character) => {
-    toast.info('Eliminar personaje', {
+    toast.info('¿Estás seguro?', {
       description: 'Desea eliminar el personaje ' + character.name,
       position: 'top-center',
       icon: <Delete sx={{ color: 'red' }} />,

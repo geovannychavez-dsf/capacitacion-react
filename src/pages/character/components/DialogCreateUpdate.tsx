@@ -74,7 +74,7 @@ export const DialogCreateUpdate = ({ open, setOpen }: Readonly<DialogCreateUpdat
           alt={'character'}
         />
         <form onSubmit={handleSubmit(handelFormSubmit)}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{ mt: 2 }}>
             <Grid>
               <FormControl sx={{ m: 1, width: '100%' }}>
                 <InputLabel htmlFor="name">Name</InputLabel>

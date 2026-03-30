@@ -24,13 +24,13 @@ Este proyecto es una aplicación de React creada con Vite, que consume la API de
 
 VITE_API_CHARACTER='http://localhost:port/api/v1'
 VITE_USERNAME_CHARACTER=''
-VITE_USERNAME_CHARACTER='' 
+VITE_USERNAME_CHARACTER=''
 
 ## Se Agrega libreria sonner
-```bash
-npm i 
-```
 
+```bash
+npm i
+```
 
 ## Cómo ejecutar el proyecto
 
