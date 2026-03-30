@@ -8,8 +8,6 @@ export const characterAdapter = ({ characters }: { characters: Character[] }): C
     species: character.species,
     type: character.type,
     gender: character.gender,
-    origin: character.origin,
-    location: character.location,
     image: character.image,
   }));
 };
