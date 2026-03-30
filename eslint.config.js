@@ -88,11 +88,9 @@ export default [
           'newlines-between': 'always',
         },
       ],
-
       // ---- TypeScript ----
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn'],
-
       '@typescript-eslint/naming-convention': [
         'error',
         {

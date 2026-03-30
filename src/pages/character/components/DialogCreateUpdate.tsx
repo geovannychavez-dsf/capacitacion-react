@@ -1,3 +1,4 @@
+import { Close } from '@mui/icons-material';
 import {
   CardMedia,
   CircularProgress,
@@ -5,13 +6,19 @@ import {
   Input,
   InputLabel,
   Typography,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  AppBar,
+  Toolbar,
+  IconButton,
 } from '@mui/material';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
+import { CHARACTER_QUERY_ID } from '../constants/character-constants';
 import { useCharacterCrud } from '../hooks/useCharacterCrud';
 import { useValiateCharacter } from '../hooks/useValiateCharacter';
 import { Character } from '../interfaces/rick-api.interface';
@@ -19,27 +26,27 @@ import { Character } from '../interfaces/rick-api.interface';
 interface DialogCreateUpdateProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  inicialValue: Character;
 }
-export default function DialogCreateUpdate({
-  open,
-  setOpen,
-  inicialValue,
-}: Readonly<DialogCreateUpdateProps>) {
+export const DialogCreateUpdate = ({ open, setOpen }: Readonly<DialogCreateUpdateProps>) => {
+  const queryClient = useQueryClient();
   const handleClose = () => {
     setOpen(false);
   };
-  const { register, watch, handleSubmit, errors } = useValiateCharacter();
+  const { register, watch, handleSubmit, errors, reset } = useValiateCharacter();
   const { createCharacter, updateCharacter } = useCharacterCrud();
-
-  const handelFormSubmit = async (value: Omit<Character, 'id'>) => {
+  const inicialValue = queryClient.getQueryData<Character>([CHARACTER_QUERY_ID]) as Character;
+  const handelFormSubmit = async (character: Omit<Character, 'id'>) => {
     if (inicialValue.id === 0) {
-      await createCharacter.mutateAsync({ ...value, id: 0 });
+      await createCharacter.mutateAsync({ ...character, id: 0 });
     } else {
-      await updateCharacter.mutateAsync({ ...value, id: inicialValue.id });
+      await updateCharacter.mutateAsync({ ...character, id: inicialValue.id });
     }
+    reset();
     setOpen(false);
   };
+  useEffect(() => {
+    reset(inicialValue);
+  }, [open, inicialValue, reset]);
   return (
     <Dialog
       open={open}
@@ -47,104 +54,95 @@ export default function DialogCreateUpdate({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
+      <AppBar sx={{ position: 'relative' }}>
+        <Toolbar>
+          <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
+            <Close />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
       <DialogTitle id="alert-dialog-title">
         {inicialValue?.id === 0 ? 'Crear Character' : 'Actualizar Character'}
       </DialogTitle>
       <DialogContent>
         <CardMedia
-          sx={{ height: 180, width: 260 }}
-          height={180}
-          width={290}
+          sx={{ height: 150, width: '100%' }}
+          height={150}
+          width={'100%'}
           component="img"
-          image={watch('image') || inicialValue.image}
+          image={watch('image') || 'https://placehold.co/300x200'}
           alt={'character'}
         />
         <form onSubmit={handleSubmit(handelFormSubmit)}>
-          <FormControl sx={{ m: 1, width: '90%' }}>
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Input
-              {...register('name')}
-              defaultValue={inicialValue.name}
-              id="name"
-              aria-describedby="name-text"
-            />
-          </FormControl>
-          {errors.name && (
-            <Typography variant="body1" color="error">
-              {errors.name.message}
-            </Typography>
-          )}
-          <FormControl sx={{ m: 1, width: '90%' }}>
-            <InputLabel htmlFor="status">Status</InputLabel>
-            <Input
-              {...register('status')}
-              defaultValue={inicialValue.status}
-              id="status"
-              aria-describedby="status-text"
-            />
-          </FormControl>
-          {errors.status && (
-            <Typography variant="body1" color="error">
-              {errors.status.message}
-            </Typography>
-          )}
-          <FormControl sx={{ m: 1, width: '90%' }}>
-            <InputLabel htmlFor="species">Species</InputLabel>
-            <Input
-              {...register('species')}
-              defaultValue={inicialValue.species}
-              id="species"
-              aria-describedby="species-text"
-            />
-          </FormControl>
-          {errors.species && (
-            <Typography variant="body1" color="error">
-              {errors.species.message}
-            </Typography>
-          )}
-          <FormControl sx={{ m: 1, width: '90%' }}>
-            <InputLabel htmlFor="type">Type</InputLabel>
-            <Input
-              {...register('type')}
-              id="type"
-              defaultValue={inicialValue.type}
-              aria-describedby="type-text"
-            />
-          </FormControl>
-          {errors.type && (
-            <Typography variant="body1" color="error">
-              {errors.type.message}
-            </Typography>
-          )}
-          <FormControl sx={{ m: 1, width: '90%' }}>
-            <InputLabel htmlFor="gender">Gender</InputLabel>
-            <Input
-              {...register('gender')}
-              id="gender"
-              defaultValue={inicialValue.gender}
-              aria-describedby="gender-text"
-            />
-          </FormControl>
-          {errors.gender && (
-            <Typography variant="body1" color="error">
-              {errors.gender.message}
-            </Typography>
-          )}
-          <FormControl sx={{ m: 1, width: '90%' }}>
-            <InputLabel htmlFor="image">Image</InputLabel>
-            <Input
-              {...register('image')}
-              defaultValue={inicialValue.image}
-              id="image"
-              aria-describedby="image-text"
-            />
-          </FormControl>
-          {errors.image && (
-            <Typography variant="body1" color="error">
-              {errors.image.message}
-            </Typography>
-          )}
-          <FormControl sx={{ m: 1, width: '90%' }}>
+          <Grid container spacing={2}>
+            <Grid>
+              <FormControl sx={{ m: 1, width: '100%' }}>
+                <InputLabel htmlFor="name">Name</InputLabel>
+                <Input {...register('name')} id="name" aria-describedby="name-text" />
+              </FormControl>
+              {errors.name && (
+                <Typography variant="body1" color="error">
+                  {errors.name.message}
+                </Typography>
+              )}
+            </Grid>
+            <Grid>
+              <FormControl sx={{ m: 1, width: '100%' }}>
+                <InputLabel htmlFor="status">Status</InputLabel>
+                <Input {...register('status')} id="status" aria-describedby="status-text" />
+              </FormControl>
+              {errors.status && (
+                <Typography variant="body1" color="error">
+                  {errors.status.message}
+                </Typography>
+              )}
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid>
+              <FormControl sx={{ m: 1, width: '100%' }}>
+                <InputLabel htmlFor="species">Species</InputLabel>
+                <Input {...register('species')} id="species" aria-describedby="species-text" />
+              </FormControl>
+              {errors.species && (
+                <Typography variant="body1" color="error">
+                  {errors.species.message}
+                </Typography>
+              )}
+            </Grid>
+            <Grid>
+              <FormControl sx={{ m: 1, width: '100%' }}>
+                <InputLabel htmlFor="type">Type</InputLabel>
+                <Input {...register('type')} id="type" aria-describedby="type-text" />
+              </FormControl>
+              {errors.type && (
+                <Typography variant="body1" color="error">
+                  {errors.type.message}
+                </Typography>
+              )}
+            </Grid>
+          </Grid>
+          <Grid container>
+            <FormControl sx={{ m: 1, width: '100%' }}>
+              <InputLabel htmlFor="gender">Gender</InputLabel>
+              <Input {...register('gender')} id="gender" aria-describedby="gender-text" />
+            </FormControl>
+            {errors.gender && (
+              <Typography variant="body1" color="error">
+                {errors.gender.message}
+              </Typography>
+            )}
+            <FormControl sx={{ m: 1, width: '100%' }}>
+              <InputLabel htmlFor="image">Image</InputLabel>
+              <Input {...register('image')} id="image" aria-describedby="image-text" />
+            </FormControl>
+            {errors.image && (
+              <Typography variant="body1" color="error">
+                {errors.image.message}
+              </Typography>
+            )}
+          </Grid>
+          <FormControl sx={{ m: 1, width: '100%' }}>
             <Button
               type="submit"
               variant="contained"
@@ -158,11 +156,6 @@ export default function DialogCreateUpdate({
           </FormControl>
         </form>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} autoFocus>
-          cancelar
-        </Button>
-      </DialogActions>
     </Dialog>
   );
-}
+};

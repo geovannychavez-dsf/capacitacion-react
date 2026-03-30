@@ -34,9 +34,13 @@ export class CharacterApiService {
       throw new ApiError(500, MESSAGE_ERROR);
     }
   }
-  async createCharacter(character: Character): Promise<Character> {
+  async createCharacter(character: Omit<Partial<Character>, 'id'>): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.post('/character', character);
+      const cleanCharacter =
+        (character as Character).id === 0
+          ? (({ id, ...rest }) => rest)(character as Character)
+          : character;
+      const { data } = await axiosIntancesService.post('/characters', cleanCharacter);
       const { data: characterData } = data;
       return characterData;
     } catch (error) {
@@ -64,9 +68,10 @@ export class CharacterApiService {
     }
   }
 
-  async updateCharacter(id: number, character: Character): Promise<Character> {
+  async updateCharacter(character: Omit<Character, 'id'>): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.put(`/characters/${id}`, character);
+      const { id, ...cleanCharacter } = character as Character;
+      const { data } = await axiosIntancesService.put(`/characters/${id}`, cleanCharacter);
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

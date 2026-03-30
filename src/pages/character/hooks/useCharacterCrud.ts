@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { ApiError } from '../../../core/api-error';
-import { CHARACTER_QUERY } from '../constants/character-constants';
+import { CHARACTER_QUERY, DURATION } from '../constants/character-constants';
 import type { Character } from '../interfaces/rick-api.interface';
 import { characterApiService } from '../services/character-api.service';
 
@@ -15,7 +15,7 @@ export const useCharacterCrud = () => {
     Character,
     { previousCharacters?: Character[] }
   >({
-    mutationFn: async (newCharacter: Character) => {
+    mutationFn: async (newCharacter: Partial<Character>) => {
       const character = await characterApiService.createCharacter(newCharacter);
       return character;
     },
@@ -30,7 +30,7 @@ export const useCharacterCrud = () => {
     },
     onError: (error, newCharar, context) => {
       if (error instanceof ApiError) {
-        toast.error(error.message + ' no se agrego' + newCharar.name, { duration: 5000 });
+        toast.error(error.message + ' no se agrego ' + newCharar.name, { duration: DURATION });
       }
       if (context?.previousCharacters) {
         queryClient.setQueryData([CHARACTER_QUERY], context.previousCharacters);
@@ -57,13 +57,15 @@ export const useCharacterCrud = () => {
       return { previousCharacters };
     },
     mutationFn: async (newCharacter: Character) => {
-      const character = await characterApiService.updateCharacter(newCharacter.id, newCharacter);
-      toast.success('Personaje actualizado', { duration: 5000 });
+      const character = await characterApiService.updateCharacter(newCharacter);
+      toast.success('Personaje actualizado', { duration: DURATION });
       return character;
     },
     onError: (error, newCharar, context) => {
       if (error instanceof ApiError) {
-        toast.error(error.message + ' no se agrego' + newCharar.name, { duration: 5000 });
+        toast.error(' no se actualizo ' + newCharar.name + ' ' + error.message, {
+          duration: DURATION,
+        });
       }
       if (context?.previousCharacters) {
         queryClient.setQueryData([CHARACTER_QUERY], context.previousCharacters);
@@ -73,7 +75,6 @@ export const useCharacterCrud = () => {
       queryClient.invalidateQueries({ queryKey: [CHARACTER_QUERY] });
     },
   });
-
   const deleteCharacter = useMutation<number, ApiError, number>({
     onMutate: async (id: number) => {
       await queryClient.cancelQueries({ queryKey: [CHARACTER_QUERY] });
@@ -95,11 +96,10 @@ export const useCharacterCrud = () => {
     },
     onError: (error) => {
       if (error instanceof ApiError) {
-        toast.error(error.message, { duration: 5000 });
+        toast.error(error.message, { duration: DURATION });
       }
     },
   });
-
   return {
     createCharacter,
     updateCharacter,
