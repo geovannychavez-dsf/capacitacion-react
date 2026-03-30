@@ -25,6 +25,8 @@ export interface Character {
   image: string;
 }
 
+export interface CharacterCreate extends Omit<Character, 'id'> {}
+
 export interface RickAndMortyResponse {
   info: Info;
   results: Character[];

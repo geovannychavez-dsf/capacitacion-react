@@ -21,7 +21,7 @@ import { useEffect } from 'react';
 import { CHARACTER_QUERY_ID } from '../constants/character-constants';
 import { useCharacterCrud } from '../hooks/useCharacterCrud';
 import { useValiateCharacter } from '../hooks/useValiateCharacter';
-import { Character } from '../interfaces/rick-api.interface';
+import { Character, CharacterCreate } from '../interfaces/rick-api.interface';
 
 interface DialogCreateUpdateProps {
   open: boolean;
@@ -35,9 +35,9 @@ export const DialogCreateUpdate = ({ open, setOpen }: Readonly<DialogCreateUpdat
   const { register, watch, handleSubmit, errors, reset } = useValiateCharacter();
   const { createCharacter, updateCharacter } = useCharacterCrud();
   const inicialValue = queryClient.getQueryData<Character>([CHARACTER_QUERY_ID]) as Character;
-  const handelFormSubmit = async (character: Omit<Character, 'id'>) => {
+  const handelFormSubmit = async (character: CharacterCreate) => {
     if (inicialValue.id === 0) {
-      await createCharacter.mutateAsync({ ...character, id: 0 });
+      await createCharacter.mutateAsync(character);
     } else {
       await updateCharacter.mutateAsync({ ...character, id: inicialValue.id });
     }

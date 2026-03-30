@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ApiError } from '../../../core/api-error';
 import axiosIntancesService from '../../../services/axion-intances.service';
 import { MESSAGE_ERROR } from '../constants/character-constants';
-import { Character } from '../interfaces/rick-api.interface';
+import { Character, CharacterCreate } from '../interfaces/rick-api.interface';
 
 export class CharacterApiService {
   async getCharacterById(id: number): Promise<Character> {
@@ -34,13 +34,9 @@ export class CharacterApiService {
       throw new ApiError(500, MESSAGE_ERROR);
     }
   }
-  async createCharacter(character: Omit<Partial<Character>, 'id'>): Promise<Character> {
+  async createCharacter(character: CharacterCreate): Promise<Character> {
     try {
-      const cleanCharacter =
-        (character as Character).id === 0
-          ? (({ id, ...rest }) => rest)(character as Character)
-          : character;
-      const { data } = await axiosIntancesService.post('/characters', cleanCharacter);
+      const { data } = await axiosIntancesService.post('/characters', character);
       const { data: characterData } = data;
       return characterData;
     } catch (error) {
@@ -68,10 +64,9 @@ export class CharacterApiService {
     }
   }
 
-  async updateCharacter(character: Omit<Character, 'id'>): Promise<Character> {
+  async updateCharacter(character: Character): Promise<Character> {
     try {
-      const { id, ...cleanCharacter } = character as Character;
-      const { data } = await axiosIntancesService.put(`/characters/${id}`, cleanCharacter);
+      const { data } = await axiosIntancesService.put(`/characters/${character.id}`, character);
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

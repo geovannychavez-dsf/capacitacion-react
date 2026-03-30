@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 import { ApiError } from '../../../core/api-error';
 import { CHARACTER_QUERY } from '../constants/character-constants';
-import type { Character } from '../interfaces/rick-api.interface';
+import type { Character, CharacterCreate } from '../interfaces/rick-api.interface';
 import { characterApiService } from '../services/character-api.service';
 import { ToastOpction } from '../styles/contaniner';
 
@@ -11,16 +11,16 @@ export const useCharacterCrud = () => {
   const queryClient = useQueryClient();
 
   const createCharacter = useMutation<
-    Character,
+    CharacterCreate,
     ApiError,
-    Character,
+    CharacterCreate,
     { previousCharacters?: Character[] }
   >({
-    mutationFn: async (newCharacter: Partial<Character>) => {
+    mutationFn: async (newCharacter: CharacterCreate) => {
       const character = await characterApiService.createCharacter(newCharacter);
       return character;
     },
-    onMutate: async (newCharacter: Character) => {
+    onMutate: async (newCharacter: CharacterCreate) => {
       await queryClient.cancelQueries({ queryKey: [CHARACTER_QUERY] });
       const previousCharacters = queryClient.getQueryData<Character[]>([CHARACTER_QUERY]);
       queryClient.setQueryData([CHARACTER_QUERY], (old: Character[] = []) => [
