@@ -2,7 +2,7 @@ import { Delete } from '@mui/icons-material';
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import * as motion from 'motion/react-client';
 
-import { useCardHook } from '../hooks/useCardHook';
+import { useCardHook } from '../hooks';
 import { Character } from '../interfaces/rick-api.interface';
 
 export const CharacterCard = ({

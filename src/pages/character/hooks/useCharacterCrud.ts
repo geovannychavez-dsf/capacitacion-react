@@ -60,7 +60,7 @@ export const useCharacterCrud = () => {
     },
     onSuccess: (character) => {
       const newCharacters = queryClient.getQueryData<Character[]>([CHARACTER_QUERY]);
-      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[] = []) => [
+      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[]) => [
         ...previousCharacters,
         { ...character },
       ]);
@@ -75,13 +75,13 @@ export const useCharacterCrud = () => {
     onMutate: async (id: number) => {
       await queryClient.cancelQueries({ queryKey: [CHARACTER_QUERY] });
       const newCharacters = queryClient.getQueryData([CHARACTER_QUERY]);
-      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[] = []) => [
+      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[]) => [
         ...previousCharacters.filter((character) => character.id !== id),
       ]);
       return { newCharacters };
     },
     onSuccess: (id) => {
-      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[] = []) => [
+      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[]) => [
         ...previousCharacters.filter((character) => character.id !== id),
       ]);
     },

@@ -16,7 +16,7 @@ import {
   IconButton,
 } from '@mui/material';
 
-import { useValiateCharacter } from '../hooks/useValiateCharacter';
+import { useValiateCharacter } from '../hooks';
 
 interface DialogCreateUpdateProps {
   open: boolean;

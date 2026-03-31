@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { chartersAxios } from '.';
+import { chartersRickapi } from '.';
 import { ApiError } from '../../../core/api-error';
 import { INICIO_PAGE_CHARACTER } from '../constants/character-constants';
 import { Character, RickAndMortyResponse } from '../interfaces/rick-api.interface';
@@ -15,7 +15,7 @@ export class RickAndMortyService {
     abortSignal: AbortSignal,
   ): Promise<RickAndMortyResponse> {
     try {
-      const { data } = await chartersAxios.get(`/character?page=${page}`, {
+      const { data } = await chartersRickapi.get(`/character?page=${page}`, {
         signal: abortSignal,
       });
       return data;
@@ -36,7 +36,7 @@ export class RickAndMortyService {
    */
   async getCharacterById(id: number): Promise<Character> {
     try {
-      const { data } = await chartersAxios.get(`/character/${id}`);
+      const { data } = await chartersRickapi.get(`/character/${id}`);
       return data as Character;
     } catch (error) {
       if (axios.isAxiosError(error)) {
