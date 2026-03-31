@@ -37,9 +37,6 @@ export const useCharacterCrud = () => {
         queryClient.setQueryData([CHARACTER_QUERY], context.previousCharacters);
       }
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [CHARACTER_QUERY] });
-    },
   });
 
   const updateCharacter = useMutation<
@@ -48,15 +45,6 @@ export const useCharacterCrud = () => {
     Character,
     { previousCharacters?: Character[] }
   >({
-    onMutate: async (newCharacter: Character) => {
-      await queryClient.cancelQueries({ queryKey: [CHARACTER_QUERY] });
-      const previousCharacters = queryClient.getQueryData<Character[]>([CHARACTER_QUERY]);
-      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[] = []) => [
-        ...previousCharacters,
-        { ...newCharacter, id: Date.now() },
-      ]);
-      return { previousCharacters };
-    },
     mutationFn: async (newCharacter: Character) => {
       const character = await characterApiService.updateCharacter(newCharacter);
       toast.success('Personaje actualizado', ToastOpction);
@@ -70,8 +58,13 @@ export const useCharacterCrud = () => {
         queryClient.setQueryData([CHARACTER_QUERY], context.previousCharacters);
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [CHARACTER_QUERY] });
+    onSuccess: (character) => {
+      const newCharacters = queryClient.getQueryData<Character[]>([CHARACTER_QUERY]);
+      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[] = []) => [
+        ...previousCharacters,
+        { ...character },
+      ]);
+      return { newCharacters };
     },
   });
   const deleteCharacter = useMutation<number, ApiError, number>({
@@ -81,18 +74,18 @@ export const useCharacterCrud = () => {
     },
     onMutate: async (id: number) => {
       await queryClient.cancelQueries({ queryKey: [CHARACTER_QUERY] });
-      const previousCharacters = queryClient.getQueryData([CHARACTER_QUERY]);
+      const newCharacters = queryClient.getQueryData([CHARACTER_QUERY]);
       queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[] = []) => [
         ...previousCharacters.filter((character) => character.id !== id),
       ]);
-      return { previousCharacters };
+      return { newCharacters };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [CHARACTER_QUERY] });
+    onSuccess: (id) => {
+      queryClient.setQueryData([CHARACTER_QUERY], (previousCharacters: Character[] = []) => [
+        ...previousCharacters.filter((character) => character.id !== id),
+      ]);
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [CHARACTER_QUERY] });
-    },
+
     onError: (error) => {
       if (error instanceof ApiError) {
         toast.error(error.message, ToastOpction);
