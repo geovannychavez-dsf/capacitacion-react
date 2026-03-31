@@ -20,12 +20,12 @@ export const useCharacterCrud = () => {
       const character = await characterApiService.createCharacter(newCharacter);
       return character;
     },
-    onMutate: async (newCharacter: CharacterCreate) => {
+    onSuccess: async (newCharacter: CharacterCreate) => {
       await queryClient.cancelQueries({ queryKey: [CHARACTER_QUERY] });
       const previousCharacters = queryClient.getQueryData<Character[]>([CHARACTER_QUERY]);
       queryClient.setQueryData([CHARACTER_QUERY], (old: Character[] = []) => [
         ...old,
-        { ...newCharacter, id: Date.now() },
+        { ...newCharacter },
       ]);
       return { previousCharacters };
     },

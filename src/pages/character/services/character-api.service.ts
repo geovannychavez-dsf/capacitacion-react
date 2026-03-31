@@ -66,7 +66,8 @@ export class CharacterApiService {
 
   async updateCharacter(character: Character): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.put(`/characters/${character.id}`, character);
+      const { id, ...characters } = character;
+      const { data } = await axiosIntancesService.put(`/characters/${id}`, characters);
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

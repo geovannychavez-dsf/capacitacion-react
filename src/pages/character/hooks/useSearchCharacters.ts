@@ -14,7 +14,7 @@ export const useSearchCharacters = () => {
   const [open, setOpen] = useState(false);
   const filteredCharacters = useMemo(() => {
     return characters?.filter((character: Character) =>
-      character.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      character?.name?.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [searchTerm, characters]);
   function closeSesion() {
