@@ -4,26 +4,26 @@ import { useNavigate } from 'react-router-dom';
 
 import { useFetchApicharcter } from './useFetchApicharcter';
 import { TOKEN } from '../../auth/constants/auth-constants';
-import { CHARACTER_QUERY_ID } from '../constants/character-constants';
+import { CHARACTER_ID, CHARACTER_QUERY_ID } from '../constants/character-constants';
 import { Character } from '../interfaces/rick-api.interface';
 export const useSearchCharacters = () => {
   const queryClient = useQueryClient();
-  const { characters: charactersApi, error, isLoading } = useFetchApicharcter();
+  const { characters, error, isLoading } = useFetchApicharcter();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [open, setOpen] = useState(false);
   const filteredCharacters = useMemo(() => {
-    return charactersApi?.filter((character: Character) =>
+    return characters?.filter((character: Character) =>
       character.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
-  }, [searchTerm, charactersApi]);
+  }, [searchTerm, characters]);
   function closeSesion() {
     navigate('/login');
     sessionStorage.removeItem(TOKEN);
   }
   function handleOpen() {
     setOpen(true);
-    queryClient.setQueryData([CHARACTER_QUERY_ID], { id: 0 });
+    queryClient.setQueryData([CHARACTER_QUERY_ID], { id: CHARACTER_ID });
   }
   return {
     searchTerm,

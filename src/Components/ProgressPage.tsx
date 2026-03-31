@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import SkeletonPage from './SkeletonPage';
+import { BoxStyle } from '../styles/alert-retry';
 const OLD_PROGRESS = 100;
 const INITIAL_PROGRESS = 10;
 
@@ -26,7 +27,7 @@ export default function ProgressPage() {
   }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={BoxStyle}>
       <LinearProgress variant="determinate" value={progress} />
       <SkeletonPage />
     </Box>
