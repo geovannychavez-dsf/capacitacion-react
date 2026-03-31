@@ -15,38 +15,20 @@ import {
   Toolbar,
   IconButton,
 } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 
-import { CHARACTER_QUERY_ID } from '../constants/character-constants';
-import { useCharacterCrud } from '../hooks/useCharacterCrud';
 import { useValiateCharacter } from '../hooks/useValiateCharacter';
-import { Character, CharacterCreate } from '../interfaces/rick-api.interface';
 
 interface DialogCreateUpdateProps {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
 export const DialogCreateUpdate = ({ open, setOpen }: Readonly<DialogCreateUpdateProps>) => {
-  const queryClient = useQueryClient();
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const { register, watch, handleSubmit, errors, reset } = useValiateCharacter();
-  const { createCharacter, updateCharacter } = useCharacterCrud();
-  const inicialValue = queryClient.getQueryData<Character>([CHARACTER_QUERY_ID]) as Character;
-  const handelFormSubmit = async (character: CharacterCreate) => {
-    if (inicialValue.id === 0) {
-      await createCharacter.mutateAsync(character);
-    } else {
-      await updateCharacter.mutateAsync({ ...character, id: inicialValue.id });
-    }
-    reset();
-    setOpen(false);
-  };
-  useEffect(() => {
-    reset(inicialValue);
-  }, [open, inicialValue, reset]);
+  const { register, watch, handleSubmit, errors, characterById, isPending, handleClose } =
+    useValiateCharacter({
+      open,
+      setOpen,
+    });
+
   return (
     <Dialog
       open={open}
@@ -62,7 +44,7 @@ export const DialogCreateUpdate = ({ open, setOpen }: Readonly<DialogCreateUpdat
         </Toolbar>
       </AppBar>
       <DialogTitle id="alert-dialog-title">
-        {inicialValue?.id === 0 ? 'Crear Character' : 'Actualizar Character'}
+        {characterById?.id === 0 ? 'Crear Character' : 'Actualizar Character'}
       </DialogTitle>
       <DialogContent>
         <CardMedia
@@ -73,7 +55,7 @@ export const DialogCreateUpdate = ({ open, setOpen }: Readonly<DialogCreateUpdat
           image={watch('image') || 'https://placehold.co/300x200'}
           alt={'character'}
         />
-        <form onSubmit={handleSubmit(handelFormSubmit)}>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={2} sx={{ mt: 2 }}>
             <Grid>
               <FormControl sx={{ m: 1, width: '100%' }}>
@@ -143,15 +125,9 @@ export const DialogCreateUpdate = ({ open, setOpen }: Readonly<DialogCreateUpdat
             )}
           </Grid>
           <FormControl sx={{ m: 1, width: '100%' }}>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={createCharacter.isPending || updateCharacter.isPending}
-            >
-              {inicialValue?.id === 0 ? 'Crear' : 'Actualizar'}
-              {(createCharacter.isPending || updateCharacter.isPending) && (
-                <CircularProgress size={20} />
-              )}
+            <Button type="submit" variant="contained" disabled={isPending}>
+              {characterById?.id === 0 ? 'Crear' : 'Actualizar'}
+              {isPending && <CircularProgress size={20} />}
             </Button>
           </FormControl>
         </form>

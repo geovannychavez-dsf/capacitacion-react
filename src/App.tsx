@@ -8,8 +8,8 @@ import './styles/index.css';
 import { Toast } from './components/Toaster';
 import RouterApp from './pages/router/RouterApp';
 
+const queryClient = new QueryClient();
 function App() {
-  const queryClient = new QueryClient();
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>

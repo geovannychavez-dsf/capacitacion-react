@@ -1,11 +1,8 @@
 import { Delete } from '@mui/icons-material';
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
 import * as motion from 'motion/react-client';
-import { toast } from 'sonner';
 
-import { CHARACTER_QUERY_ID, DURATION } from '../constants/character-constants';
-import { useCharacterCrud } from '../hooks/useCharacterCrud';
+import { useCardHook } from '../hooks/useCardHook';
 import { Character } from '../interfaces/rick-api.interface';
 
 export const CharacterCard = ({
@@ -15,23 +12,7 @@ export const CharacterCard = ({
   character: Character;
   setOpen: (open: boolean) => void;
 }) => {
-  const { deleteCharacter } = useCharacterCrud();
-  const queryClient = useQueryClient();
-  const handleDelete = (character: Character) => {
-    toast.info('¿Estás seguro?', {
-      description: 'Desea eliminar el personaje ' + character.name,
-      position: 'top-center',
-      icon: <Delete sx={{ color: 'red' }} />,
-      action: {
-        label: 'Eliminar',
-        onClick: () => {
-          deleteCharacter.mutate(character.id);
-        },
-      },
-      closeButton: true,
-      duration: DURATION,
-    });
-  };
+  const { handleDelete, handleOpen } = useCardHook({ setOpen });
   return (
     <motion.div
       initial={{ y: 10, opacity: 0 }}
@@ -47,10 +28,7 @@ export const CharacterCard = ({
           component="img"
           image={character.image}
           alt={character.name}
-          onClick={() => {
-            queryClient.setQueryData([CHARACTER_QUERY_ID], character);
-            setOpen(true);
-          }}
+          onClick={() => handleOpen(character)}
         />
         <CardContent>
           <Typography variant="h6">{character.name}...</Typography>

@@ -1,8 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-export const useValiateCharacter = () => {
+import { useCharacterCrud } from './useCharacterCrud';
+import { CHARACTER_QUERY_ID } from '../constants/character-constants';
+import { Character, CharacterCreate } from '../interfaces/rick-api.interface';
+
+export const useValiateCharacter = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const queryClient = useQueryClient();
   const initialValues = z.object({
     name: z.string().nonempty({ message: 'El nombre es requerido' }),
     status: z.string().nonempty({ message: 'El nombre es requerido' }),
@@ -21,5 +34,33 @@ export const useValiateCharacter = () => {
   } = useForm<FormData>({
     resolver: zodResolver(initialValues),
   });
-  return { register, handleSubmit, errors, watch, reset, initialValues };
+
+  const { createCharacter, updateCharacter } = useCharacterCrud();
+  const characterById = queryClient.getQueryData<Character>([CHARACTER_QUERY_ID]) as Character;
+  const handelFormSubmit = async (character: CharacterCreate) => {
+    if (characterById.id === 0) {
+      await createCharacter.mutateAsync(character);
+    } else {
+      await updateCharacter.mutateAsync({ ...character, id: characterById.id });
+    }
+    reset();
+    setOpen(false);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    reset();
+  };
+  useEffect(() => {
+    reset(characterById);
+  }, [open, characterById, reset]);
+  return {
+    register,
+    handleSubmit: handleSubmit(handelFormSubmit),
+    errors,
+    watch,
+    reset,
+    characterById,
+    isPending: createCharacter.isPending || updateCharacter.isPending,
+    handleClose,
+  };
 };
