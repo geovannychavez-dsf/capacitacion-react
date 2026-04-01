@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import { useCharacterCrud } from './useCharacterCrud';
-import { CHARACTER_QUERY_ID } from '../constants/character-constants';
+import { CHARACTER_QUERY_ID } from '../constants/character-const.constant';
 import { Character, CharacterCreate } from '../interfaces/rick-api.interface';
 
 export const useValiateCharacter = ({

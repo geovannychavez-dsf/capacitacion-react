@@ -55,6 +55,10 @@ const architectureFilenameConventions = {
     'interface',
     'En interfaces/: nombre kebab-case + ".interface.ts" (o index.ts).',
   ),
+  'constants-filename': createArchitectureFilenameRule(
+    'constant',
+    'En constants/: nombre kebab-case + ".constant.ts" (o index.ts).',
+  ),
 };
 
 export default architectureFilenameConventions;

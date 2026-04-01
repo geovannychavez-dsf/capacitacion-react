@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { characterAdapter } from '../adapters/character-adacter.adapter';
-import { CHARACTER_QUERY } from '../constants/character-constants';
+import { CHARACTER_QUERY } from '../constants/character-const.constant';
 import { characterApiService } from '../services/character-api.service';
 
 export const useFetchApicharcter = () => {

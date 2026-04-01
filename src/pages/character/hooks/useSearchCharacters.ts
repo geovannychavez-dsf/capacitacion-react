@@ -3,8 +3,8 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useFetchApicharcter } from './useFetchApicharcter';
-import { TOKEN } from '../../auth/constants/auth-constants';
-import { CHARACTER_ID, CHARACTER_QUERY_ID } from '../constants/character-constants';
+import { TOKEN } from '../../auth/constants/auth-constants.constant';
+import { CHARACTER_ID, CHARACTER_QUERY_ID } from '../constants/character-const.constant';
 import { Character } from '../interfaces/rick-api.interface';
 export const useSearchCharacters = () => {
   const queryClient = useQueryClient();

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { ApiError } from '../../../core/api-error';
-import { CHARACTER_QUERY } from '../constants/character-constants';
+import { CHARACTER_QUERY } from '../constants/character-const.constant';
 import type { Character, CharacterCreate } from '../interfaces/rick-api.interface';
 import { characterApiService } from '../services/character-api.service';
 import { ToastOpction } from '../styles/contaniner';

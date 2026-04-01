@@ -6,3 +6,4 @@ export const CHARACTER_QUERY = 'character';
 export const CHARACTER_QUERY_ID = 'characterID';
 export const MESSAGE_ERROR = 'Hubo un error por favor intente mas tarde';
 export const DURATION = 3000;
+export const CHARACTER_PATH = '/characters';

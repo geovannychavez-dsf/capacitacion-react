@@ -219,4 +219,13 @@ export default [
       'local-filenames/interfaces-filename': 'error',
     },
   },
+  {
+    files: ['**/constants/**/*.ts'],
+    plugins: {
+      'local-filenames': localFilenamesPlugin,
+    },
+    rules: {
+      'local-filenames/constants-filename': 'error',
+    },
+  },
 ];

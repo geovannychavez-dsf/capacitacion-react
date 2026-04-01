@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useCharacterCrud } from './useCharacterCrud';
-import { CHARACTER_QUERY_ID, DURATION } from '../constants/character-constants';
+import { CHARACTER_QUERY_ID, DURATION } from '../constants/character-const.constant';
 import { Character } from '../interfaces/rick-api.interface';
 
 export const useCardHook = ({ setOpen }: { setOpen: (open: boolean) => void }) => {

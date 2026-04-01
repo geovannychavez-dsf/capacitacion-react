@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { chartersRickapi } from '.';
 import { ApiError } from '../../../core/api-error';
-import { INICIO_PAGE_CHARACTER } from '../constants/character-constants';
+import { INICIO_PAGE_CHARACTER } from '../constants/character-const.constant';
 import { Character, RickAndMortyResponse } from '../interfaces/rick-api.interface';
 export class RickAndMortyService {
   /**

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { ApiError } from '../../../core/api-error';
-import { TOKEN } from '../constants/auth-constants';
+import { TOKEN } from '../constants/auth-constants.constant';
 import { authService } from '../services/auth.service';
 
 const useLogin = () => {

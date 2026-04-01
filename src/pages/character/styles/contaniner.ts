@@ -1,7 +1,7 @@
 import type { CSSProperties } from '@mui/material/styles';
 import { ToasterProps } from 'sonner';
 
-import { DURATION } from '../constants/character-constants';
+import { DURATION } from '../constants/character-const.constant';
 
 export const containerCharacterStyle: CSSProperties = {
   display: 'flex',

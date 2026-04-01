@@ -2,13 +2,13 @@ import axios from 'axios';
 
 import { ApiError } from '../../../core/api-error';
 import axiosIntancesService from '../../../services/axion-intances.service';
-import { MESSAGE_ERROR } from '../constants/character-constants';
+import { CHARACTER_PATH, MESSAGE_ERROR } from '../constants/character-const.constant';
 import { Character, CharacterCreate } from '../interfaces/rick-api.interface';
 
 export class CharacterApiService {
   async getCharacterById(id: number): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.get(`/character/${id}`);
+      const { data } = await axiosIntancesService.get(`/characters/${id}`);
       const { data: character } = data;
       return character;
     } catch (error) {
@@ -22,7 +22,7 @@ export class CharacterApiService {
   }
   async getCharacters(): Promise<Character[]> {
     try {
-      const { data } = await axiosIntancesService.get('/characters');
+      const { data } = await axiosIntancesService.get(`${CHARACTER_PATH}`);
       const { data: character } = data;
       return character;
     } catch (error) {
@@ -36,7 +36,7 @@ export class CharacterApiService {
   }
   async createCharacter(character: CharacterCreate): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.post('/characters', character);
+      const { data } = await axiosIntancesService.post(`${CHARACTER_PATH}`, character);
       const { data: characterData } = data;
       return characterData;
     } catch (error) {
@@ -51,7 +51,7 @@ export class CharacterApiService {
 
   async deleteCharacter(id: number): Promise<Character> {
     try {
-      const { data } = await axiosIntancesService.delete(`/characters/${id}`);
+      const { data } = await axiosIntancesService.delete(`${CHARACTER_PATH}/${id}`);
       const { data: characterData } = data;
       return characterData;
     } catch (error) {
@@ -67,7 +67,7 @@ export class CharacterApiService {
   async updateCharacter(character: Character): Promise<Character> {
     try {
       const { id, ...characters } = character;
-      const { data } = await axiosIntancesService.put(`/characters/${id}`, characters);
+      const { data } = await axiosIntancesService.put(`${CHARACTER_PATH}/${id}`, characters);
       return data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
