@@ -22,7 +22,9 @@ export class CharacterApiService {
   }
   async getCharacters(): Promise<Character[]> {
     try {
-      const { data } = await axiosIntancesService.get(`${CHARACTER_PATH}`);
+      const { data } = await axiosIntancesService.get(`${CHARACTER_PATH}`, {
+        signal: AbortSignal.timeout(5000),
+      });
       const { data: character } = data;
       return character;
     } catch (error) {

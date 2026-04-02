@@ -1,7 +1,18 @@
-import { Button, Container, FormControl, Grid, Input, InputLabel, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  Input,
+  InputLabel,
+  Typography,
+} from '@mui/material';
 import * as motion from 'motion/react-client';
 
+import { LoginForm } from './components/LoginForm';
 import useLogin from './hooks/useLogin';
+import { LeftPage } from '../character/components/LeftPage';
 const AuthPage = () => {
   const { formLogin, handleSubmit, register, errors } = useLogin();
   return (
@@ -14,7 +25,23 @@ const AuthPage = () => {
       exit={{ opacity: 0, scale: 0 }}
       key="box"
     >
-      <Container maxWidth="sm">
+      <Box
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          bgcolor: '#1A1A2E',
+        }}
+      >
+        <LeftPage />
+
+        <LoginForm />
+      </Box>
+      <Container
+        maxWidth="sm"
+        style={{
+          display: 'none',
+        }}
+      >
         <Grid
           container
           spacing={1}
